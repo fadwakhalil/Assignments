@@ -8,10 +8,10 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--First-->
+        <!--LifeGrid -->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="SimulationViewController" customModule="Assignment1" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="LifeGrid " id="9pv-A4-QxB" customClass="SimulationViewController" customModule="Assignment1" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Nj8-KN-XD3"/>
                         <viewControllerLayoutGuide type="bottom" id="gdw-id-mVd"/>
@@ -20,28 +20,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3D-V3-pMd">
-                                <rect key="frame" x="75" y="75" width="450" height="450"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="grv-dj-vl0">
+                                <rect key="frame" x="123" y="123" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.11429600619999999" green="0.86404533439999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="m3D-V3-pMd" secondAttribute="height" multiplier="1:1" id="LHH-VB-vyU"/>
+                                    <constraint firstAttribute="width" secondItem="grv-dj-vl0" secondAttribute="height" multiplier="1:1" id="qur-Ej-ww6"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="m3D-V3-pMd" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" multiplier="1.75" id="2na-Sr-DVa"/>
-                            <constraint firstItem="m3D-V3-pMd" firstAttribute="centerY" secondItem="tsR-hK-woN" secondAttribute="centerY" id="DAT-xw-fzZ"/>
-                            <constraint firstItem="m3D-V3-pMd" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" multiplier="0.25" id="IB0-MI-qmf"/>
-                            <constraint firstItem="m3D-V3-pMd" firstAttribute="trailing" secondItem="tsR-hK-woN" secondAttribute="centerXWithinMargins" multiplier="1.75" id="hP7-1I-7uY"/>
-                            <constraint firstItem="m3D-V3-pMd" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="centerXWithinMargins" multiplier="0.25" id="oO2-Wb-Qvs"/>
+                            <constraint firstItem="grv-dj-vl0" firstAttribute="centerY" secondItem="tsR-hK-woN" secondAttribute="centerY" multiplier="0.66" id="Pf8-nY-Ubb"/>
+                            <constraint firstItem="grv-dj-vl0" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" multiplier="0.66" id="jLb-Ry-mB0"/>
+                            <constraint firstItem="grv-dj-vl0" firstAttribute="width" secondItem="tsR-hK-woN" secondAttribute="width" multiplier="0.25" id="qjJ-cp-qTI"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="2na-Sr-DVa"/>
-                                <exclude reference="IB0-MI-qmf"/>
-                            </mask>
-                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
                 </viewController>
@@ -61,27 +53,94 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Second View" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="zEq-FU-wV5">
-                                <rect key="frame" x="195" y="279" width="210" height="42"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loaded by InstrumentationViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDk-cv-Gan">
-                                <rect key="frame" x="166" y="329" width="268" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tSi-vV-cK8">
+                                <rect key="frame" x="20" y="20" width="264" height="517"/>
+                                <color key="backgroundColor" red="0.53491323155362569" green="0.85551701207217334" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="18" y="20" width="562" height="151"/>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FWu-bH-AwM">
+                                <rect key="frame" x="316" y="20" width="264" height="517"/>
+                                <color key="backgroundColor" red="0.70902665499999995" green="1" blue="0.57431814140000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="19" y="196" width="562" height="147"/>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zEq-FU-wV5" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="F2w-TT-UBt"/>
-                            <constraint firstItem="zEq-FU-wV5" firstAttribute="centerX" secondItem="NDk-cv-Gan" secondAttribute="centerX" id="Inf-Iy-ySb"/>
-                            <constraint firstItem="zEq-FU-wV5" firstAttribute="centerY" secondItem="QS5-Rx-YEW" secondAttribute="centerY" id="Pfz-7S-jFx"/>
-                            <constraint firstItem="NDk-cv-Gan" firstAttribute="top" secondItem="zEq-FU-wV5" secondAttribute="bottom" constant="8" symbolic="YES" id="tTd-IG-9Uh"/>
+                            <constraint firstItem="tSi-vV-cK8" firstAttribute="bottom" secondItem="jVw-Pm-MA8" secondAttribute="top" id="1b3-5z-OTs"/>
+                            <constraint firstItem="tSi-vV-cK8" firstAttribute="bottom" secondItem="FWu-bH-AwM" secondAttribute="bottom" id="7bd-0L-DYJ"/>
+                            <constraint firstItem="FWu-bH-AwM" firstAttribute="leading" secondItem="tSi-vV-cK8" secondAttribute="trailing" constant="16" id="7qK-Tt-Xuc"/>
+                            <constraint firstItem="tSi-vV-cK8" firstAttribute="width" secondItem="FWu-bH-AwM" secondAttribute="width" id="9HB-jU-5r0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FWu-bH-AwM" secondAttribute="trailing" id="J6I-NL-Y93"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FWu-bH-AwM" secondAttribute="trailing" id="Jbr-Dd-rpq"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="tSi-vV-cK8" secondAttribute="leading" id="UN2-pC-Czl"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="FWu-bH-AwM" secondAttribute="leading" id="bSX-ha-WdS"/>
+                            <constraint firstItem="FWu-bH-AwM" firstAttribute="top" secondItem="sAj-5i-3X2" secondAttribute="bottom" id="elx-Uv-OMd"/>
+                            <constraint firstItem="jVw-Pm-MA8" firstAttribute="top" secondItem="FWu-bH-AwM" secondAttribute="bottom" id="fYt-js-9fD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tSi-vV-cK8" secondAttribute="trailing" id="foC-v2-wIg"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="tSi-vV-cK8" secondAttribute="leading" id="fqq-p5-uAG"/>
+                            <constraint firstItem="jVw-Pm-MA8" firstAttribute="top" secondItem="tSi-vV-cK8" secondAttribute="bottom" constant="183" id="gzn-aq-BgV"/>
+                            <constraint firstItem="tSi-vV-cK8" firstAttribute="top" secondItem="sAj-5i-3X2" secondAttribute="bottom" id="uh1-Vp-Sc6"/>
+                            <constraint firstItem="FWu-bH-AwM" firstAttribute="top" secondItem="tSi-vV-cK8" secondAttribute="bottom" constant="35" id="vc2-XW-9M8"/>
+                            <constraint firstItem="tSi-vV-cK8" firstAttribute="top" secondItem="sAj-5i-3X2" secondAttribute="bottom" id="vr4-i7-xJS"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1b3-5z-OTs"/>
+                                <exclude reference="7bd-0L-DYJ"/>
+                                <exclude reference="9HB-jU-5r0"/>
+                                <exclude reference="UN2-pC-Czl"/>
+                                <exclude reference="foC-v2-wIg"/>
+                                <exclude reference="fqq-p5-uAG"/>
+                                <exclude reference="uh1-Vp-Sc6"/>
+                                <exclude reference="vr4-i7-xJS"/>
+                                <exclude reference="7qK-Tt-Xuc"/>
+                                <exclude reference="J6I-NL-Y93"/>
+                                <exclude reference="Jbr-Dd-rpq"/>
+                                <exclude reference="bSX-ha-WdS"/>
+                                <exclude reference="elx-Uv-OMd"/>
+                                <exclude reference="vc2-XW-9M8"/>
+                                <exclude reference="fYt-js-9fD"/>
+                                <exclude reference="gzn-aq-BgV"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="UN2-pC-Czl"/>
+                                <include reference="foC-v2-wIg"/>
+                                <include reference="uh1-Vp-Sc6"/>
+                                <include reference="Jbr-Dd-rpq"/>
+                                <include reference="bSX-ha-WdS"/>
+                                <include reference="vc2-XW-9M8"/>
+                                <include reference="fYt-js-9fD"/>
+                                <include reference="gzn-aq-BgV"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="1b3-5z-OTs"/>
+                                <include reference="7bd-0L-DYJ"/>
+                                <include reference="9HB-jU-5r0"/>
+                                <include reference="fqq-p5-uAG"/>
+                                <include reference="vr4-i7-xJS"/>
+                                <include reference="7qK-Tt-Xuc"/>
+                                <include reference="J6I-NL-Y93"/>
+                                <include reference="elx-Uv-OMd"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
                 </viewController>
