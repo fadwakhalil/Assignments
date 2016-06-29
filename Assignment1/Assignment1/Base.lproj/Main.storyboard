@@ -33,22 +33,42 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="grv-dj-vl0" firstAttribute="height" secondItem="nlY-SP-lkq" secondAttribute="height" multiplier="0.8" id="62F-w3-A7j"/>
+                                    <constraint firstItem="grv-dj-vl0" firstAttribute="top" secondItem="nlY-SP-lkq" secondAttribute="top" multiplier="0.1" priority="750" id="01Y-nb-12a"/>
+                                    <constraint firstItem="grv-dj-vl0" firstAttribute="height" secondItem="nlY-SP-lkq" secondAttribute="height" multiplier="0.8" constant="-40" id="62F-w3-A7j"/>
+                                    <constraint firstItem="grv-dj-vl0" firstAttribute="centerX" secondItem="nlY-SP-lkq" secondAttribute="centerX" id="AlS-mX-9qG"/>
+                                    <constraint firstItem="grv-dj-vl0" firstAttribute="centerY" secondItem="nlY-SP-lkq" secondAttribute="centerY" id="Btm-9z-Aey"/>
                                     <constraint firstItem="grv-dj-vl0" firstAttribute="centerY" secondItem="nlY-SP-lkq" secondAttribute="centerY" priority="750" id="Jap-5l-xHj"/>
                                     <constraint firstItem="grv-dj-vl0" firstAttribute="width" secondItem="nlY-SP-lkq" secondAttribute="width" multiplier="0.8" priority="750" id="NoK-Bi-qTB"/>
                                     <constraint firstItem="grv-dj-vl0" firstAttribute="centerX" secondItem="nlY-SP-lkq" secondAttribute="centerX" priority="750" id="ecT-X7-nVF"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="01Y-nb-12a"/>
                                         <exclude reference="62F-w3-A7j"/>
+                                        <exclude reference="AlS-mX-9qG"/>
+                                        <exclude reference="Btm-9z-Aey"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact">
                                     <mask key="constraints">
+                                        <include reference="01Y-nb-12a"/>
                                         <include reference="62F-w3-A7j"/>
-                                        <include reference="Jap-5l-xHj"/>
+                                        <include reference="AlS-mX-9qG"/>
+                                        <exclude reference="Btm-9z-Aey"/>
+                                        <exclude reference="Jap-5l-xHj"/>
                                         <exclude reference="NoK-Bi-qTB"/>
-                                        <include reference="ecT-X7-nVF"/>
+                                        <exclude reference="ecT-X7-nVF"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="01Y-nb-12a"/>
+                                        <include reference="62F-w3-A7j"/>
+                                        <include reference="AlS-mX-9qG"/>
+                                        <exclude reference="Btm-9z-Aey"/>
+                                        <exclude reference="Jap-5l-xHj"/>
+                                        <exclude reference="NoK-Bi-qTB"/>
+                                        <exclude reference="ecT-X7-nVF"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
