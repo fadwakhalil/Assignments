@@ -29,17 +29,14 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="grv-dj-vl0" secondAttribute="height" multiplier="1:1" id="ljs-ay-Kub"/>
                                         </constraints>
-                                        <variation key="widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="-60" y="-10" width="320" height="320"/>
-                                        </variation>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="grv-dj-vl0" firstAttribute="height" secondItem="nlY-SP-lkq" secondAttribute="height" multiplier="0.8" id="62F-w3-A7j"/>
-                                    <constraint firstItem="grv-dj-vl0" firstAttribute="centerY" secondItem="nlY-SP-lkq" secondAttribute="centerY" id="Jap-5l-xHj"/>
-                                    <constraint firstItem="grv-dj-vl0" firstAttribute="width" secondItem="nlY-SP-lkq" secondAttribute="width" multiplier="0.8" id="NoK-Bi-qTB"/>
-                                    <constraint firstItem="grv-dj-vl0" firstAttribute="centerX" secondItem="nlY-SP-lkq" secondAttribute="centerX" id="ecT-X7-nVF"/>
+                                    <constraint firstItem="grv-dj-vl0" firstAttribute="centerY" secondItem="nlY-SP-lkq" secondAttribute="centerY" priority="750" id="Jap-5l-xHj"/>
+                                    <constraint firstItem="grv-dj-vl0" firstAttribute="width" secondItem="nlY-SP-lkq" secondAttribute="width" multiplier="0.8" priority="750" id="NoK-Bi-qTB"/>
+                                    <constraint firstItem="grv-dj-vl0" firstAttribute="centerX" secondItem="nlY-SP-lkq" secondAttribute="centerX" priority="750" id="ecT-X7-nVF"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -51,6 +48,21 @@
                                         <include reference="62F-w3-A7j"/>
                                         <include reference="Jap-5l-xHj"/>
                                         <exclude reference="NoK-Bi-qTB"/>
+                                        <include reference="ecT-X7-nVF"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Jap-5l-xHj"/>
+                                        <include reference="NoK-Bi-qTB"/>
+                                        <include reference="ecT-X7-nVF"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="62F-w3-A7j"/>
+                                        <include reference="Jap-5l-xHj"/>
+                                        <include reference="NoK-Bi-qTB"/>
                                         <include reference="ecT-X7-nVF"/>
                                     </mask>
                                 </variation>
@@ -93,7 +105,7 @@
                                                 <integer key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
-                                        <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
+                                        <variation key="heightClass=compact-widthClass=regular" misplaced="YES">
                                             <rect key="frame" x="20" y="191" width="760" height="152"/>
                                         </variation>
                                     </view>
@@ -103,7 +115,7 @@
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="qLT-h5-gi1">
                                                 <rect key="frame" x="121" y="107" width="118" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" label="Frames/second"/>
-                                                <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
+                                                <variation key="heightClass=compact-widthClass=regular" misplaced="YES">
                                                     <rect key="frame" x="373" y="61" width="118" height="31"/>
                                                 </variation>
                                             </slider>
@@ -119,7 +131,7 @@
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="OQE-P2-ZR0">
                                                 <rect key="frame" x="337" y="107" width="118" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" label="Grid Size"/>
-                                                <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
+                                                <variation key="heightClass=compact-widthClass=regular" misplaced="YES">
                                                     <rect key="frame" x="67" y="61" width="118" height="31"/>
                                                 </variation>
                                             </slider>
@@ -148,7 +160,7 @@
                                                 <include reference="OQE-P2-ZR0"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
+                                        <variation key="heightClass=compact-widthClass=regular" misplaced="YES">
                                             <rect key="frame" x="20" y="39" width="760" height="152"/>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=compact">
