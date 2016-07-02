@@ -54,21 +54,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ag8-rf-WGd" firstAttribute="top" secondItem="uf6-Sr-nef" secondAttribute="bottom" constant="45" id="0yw-Gt-2nC"/>
-                            <constraint firstItem="ag8-rf-WGd" firstAttribute="top" secondItem="uf6-Sr-nef" secondAttribute="bottom" constant="46" id="1Xq-HR-9hx"/>
+                            <constraint firstItem="uf6-Sr-nef" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="7DY-PK-9Hn"/>
+                            <constraint firstItem="Y8J-F9-VCk" firstAttribute="trailing" secondItem="ag8-rf-WGd" secondAttribute="trailing" id="8f5-sG-OjT"/>
                             <constraint firstItem="uf6-Sr-nef" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9ss-hp-dUD"/>
-                            <constraint firstItem="uf6-Sr-nef" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Cu3-ZZ-Xju"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Y8J-F9-VCk" secondAttribute="trailing" constant="-20" id="Cvg-ca-XPo"/>
-                            <constraint firstItem="uf6-Sr-nef" firstAttribute="height" secondItem="ag8-rf-WGd" secondAttribute="height" id="LIb-s7-tcj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ag8-rf-WGd" secondAttribute="trailing" constant="-20" id="LrJ-UC-qMG"/>
-                            <constraint firstItem="Y8J-F9-VCk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="M4Q-Fb-2jL"/>
-                            <constraint firstItem="Y8J-F9-VCk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" priority="750" constant="204" id="XBb-Gh-RVb"/>
-                            <constraint firstItem="Y8J-F9-VCk" firstAttribute="height" secondItem="ag8-rf-WGd" secondAttribute="height" id="lbB-qu-3s3"/>
-                            <constraint firstItem="uf6-Sr-nef" firstAttribute="top" secondItem="Y8J-F9-VCk" secondAttribute="bottom" constant="46" id="pGM-lF-gxV"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ag8-rf-WGd" secondAttribute="bottom" priority="750" constant="268" id="r6q-lU-unF"/>
+                            <constraint firstItem="ag8-rf-WGd" firstAttribute="top" secondItem="uf6-Sr-nef" secondAttribute="bottom" constant="46" id="IYC-Pj-rWW"/>
+                            <constraint firstItem="uf6-Sr-nef" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Kft-qJ-86Q"/>
+                            <constraint firstItem="Y8J-F9-VCk" firstAttribute="leading" secondItem="ag8-rf-WGd" secondAttribute="leading" id="MIx-vd-SM0"/>
+                            <constraint firstAttribute="trailing" secondItem="Y8J-F9-VCk" secondAttribute="trailing" id="cOR-HE-PWP"/>
+                            <constraint firstItem="uf6-Sr-nef" firstAttribute="top" secondItem="Y8J-F9-VCk" secondAttribute="bottom" constant="46" id="jdb-Rd-Jxb"/>
+                            <constraint firstItem="Y8J-F9-VCk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jvQ-Ks-IeD"/>
+                            <constraint firstItem="Y8J-F9-VCk" firstAttribute="centerX" secondItem="uf6-Sr-nef" secondAttribute="centerX" id="sYI-7R-uE3"/>
                             <constraint firstItem="uf6-Sr-nef" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="t0U-oI-4RD"/>
-                            <constraint firstItem="uf6-Sr-nef" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="v3j-6k-w8A"/>
-                            <constraint firstItem="uf6-Sr-nef" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="wxK-A3-IVT"/>
-                            <constraint firstItem="ag8-rf-WGd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="yRg-Ih-nCv"/>
                             <constraint firstItem="uf6-Sr-nef" firstAttribute="top" secondItem="Y8J-F9-VCk" secondAttribute="bottom" constant="46" id="z9B-xy-9qj"/>
                         </constraints>
                         <variation key="default">
