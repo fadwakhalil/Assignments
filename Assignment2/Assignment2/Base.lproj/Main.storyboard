@@ -27,7 +27,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ag8-rf-WGd" userLabel="Problem 4">
-                                <rect key="frame" x="0.0" y="431" width="414" height="36"/>
+                                <rect key="frame" x="0.0" y="432" width="414" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Problem 4"/>
                                 <connections>
@@ -35,30 +35,50 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uf6-Sr-nef" userLabel="Problem 3">
-                                <rect key="frame" x="0.0" y="350" width="414" height="36"/>
+                                <rect key="frame" x="20" y="350" width="374" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="414" id="TuO-LO-UZ4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Problem 3"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="TuO-LO-UZ4"/>
+                                    </mask>
+                                </variation>
                                 <connections>
-                                    <segue destination="Nkd-J2-Vol" kind="show" identifier="Problem3" id="tTq-uY-vfP"/>
+                                    <segue destination="Nkd-J2-Vol" kind="show" identifier="Problem3" id="sjA-Nz-a9c"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ag8-rf-WGd" firstAttribute="top" secondItem="uf6-Sr-nef" secondAttribute="bottom" constant="45" id="0yw-Gt-2nC"/>
+                            <constraint firstItem="ag8-rf-WGd" firstAttribute="top" secondItem="uf6-Sr-nef" secondAttribute="bottom" constant="46" id="1Xq-HR-9hx"/>
                             <constraint firstItem="uf6-Sr-nef" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9ss-hp-dUD"/>
+                            <constraint firstItem="uf6-Sr-nef" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Cu3-ZZ-Xju"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Y8J-F9-VCk" secondAttribute="trailing" constant="-20" id="Cvg-ca-XPo"/>
+                            <constraint firstItem="uf6-Sr-nef" firstAttribute="height" secondItem="ag8-rf-WGd" secondAttribute="height" id="LIb-s7-tcj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ag8-rf-WGd" secondAttribute="trailing" constant="-20" id="LrJ-UC-qMG"/>
                             <constraint firstItem="Y8J-F9-VCk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="M4Q-Fb-2jL"/>
                             <constraint firstItem="Y8J-F9-VCk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" priority="750" constant="204" id="XBb-Gh-RVb"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ag8-rf-WGd" secondAttribute="bottom" priority="750" constant="269" id="ZIH-in-BEy"/>
+                            <constraint firstItem="Y8J-F9-VCk" firstAttribute="height" secondItem="ag8-rf-WGd" secondAttribute="height" id="lbB-qu-3s3"/>
+                            <constraint firstItem="uf6-Sr-nef" firstAttribute="top" secondItem="Y8J-F9-VCk" secondAttribute="bottom" constant="46" id="pGM-lF-gxV"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ag8-rf-WGd" secondAttribute="bottom" priority="750" constant="268" id="r6q-lU-unF"/>
                             <constraint firstItem="uf6-Sr-nef" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="t0U-oI-4RD"/>
+                            <constraint firstItem="uf6-Sr-nef" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="v3j-6k-w8A"/>
+                            <constraint firstItem="uf6-Sr-nef" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="wxK-A3-IVT"/>
                             <constraint firstItem="ag8-rf-WGd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="yRg-Ih-nCv"/>
                             <constraint firstItem="uf6-Sr-nef" firstAttribute="top" secondItem="Y8J-F9-VCk" secondAttribute="bottom" constant="46" id="z9B-xy-9qj"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="9ss-hp-dUD"/>
+                                <exclude reference="t0U-oI-4RD"/>
+                                <exclude reference="z9B-xy-9qj"/>
+                                <exclude reference="0yw-Gt-2nC"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="0VR-ff-xYg"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
@@ -156,6 +176,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQT-qg-LKR">
+                                <rect key="frame" x="20" y="214" width="374" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Run"/>
+                                <connections>
+                                    <action selector="problem3Button:" destination="Nkd-J2-Vol" eventType="touchUpInside" id="sgl-wS-Mag"/>
+                                </connections>
+                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TaQ-eM-7vm">
                                 <rect key="frame" x="87" y="342" width="240" height="52"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -167,14 +195,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQT-qg-LKR">
-                                <rect key="frame" x="20" y="214" width="374" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Run"/>
-                                <connections>
-                                    <action selector="problem3Button:" destination="Nkd-J2-Vol" eventType="touchUpInside" id="sgl-wS-Mag"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.98609963756501395" blue="0.26137452983514187" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -206,7 +226,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Vu1-tH-oda">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Fj-fR-aBO">
+                                <rect key="frame" x="20" y="222" width="374" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Run"/>
+                                <connections>
+                                    <action selector="problem4Button:" destination="qaB-Dq-Zsb" eventType="touchUpInside" id="NsL-Q7-UZo"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vu1-tH-oda">
                                 <rect key="frame" x="87" y="342" width="240" height="52"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -214,17 +242,9 @@
                                     <constraint firstAttribute="width" constant="240" id="QMc-Wq-ikt"/>
                                 </constraints>
                                 <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Fj-fR-aBO">
-                                <rect key="frame" x="20" y="222" width="374" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Run"/>
-                                <connections>
-                                    <action selector="problem4Button:" destination="qaB-Dq-Zsb" eventType="touchUpInside" id="qDA-JW-hHi"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.12121617654061778" green="0.59427056129521216" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -237,7 +257,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
-                        <outlet property="problem4Text" destination="Vu1-tH-oda" id="8a9-3L-Xwp"/>
+                        <outlet property="problem4Text" destination="Vu1-tH-oda" id="n0B-qL-Vud"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="El5-PH-tYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

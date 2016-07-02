@@ -10,12 +10,13 @@ import UIKit
 
 class Problem4ViewController: UIViewController {
     
-        @IBOutlet weak var problem4Text: UITextView!
-    
-        @IBAction func problem4Button(sender: AnyObject) {
-            problem4Text.text = "I am sleepy!"
-        
+    @IBAction func problem4Button(sender: AnyObject) {
+        problem4Text.text = "I am Starving!"
     }
+    @IBOutlet weak var problem4Text: UITextView!
+        
+    
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
