@@ -12,7 +12,37 @@ class Problem3ViewController: UIViewController {
     @IBOutlet weak var p3Text: UITextView!
 
     @IBAction func p3Button(sender: AnyObject) {
-        p3Text.text = "I am Hungry!"
+        
+        
+        let style = NSMutableParagraphStyle()
+        style.alignment = NSTextAlignment.Center
+        
+        
+        let myString = "I am Hungry!"
+        
+        var myMutableString = NSMutableAttributedString()
+        
+        myMutableString = NSMutableAttributedString(
+            string: myString,
+            attributes: [NSFontAttributeName:UIFont(
+                name: "Chalkduster",
+                size: 18.0)!])
+        
+        myMutableString.addAttribute(NSForegroundColorAttributeName,
+                                     value: UIColor.redColor(),
+                                     range: NSRange(
+                                        location:5,
+                                        length:7))
+        
+        myMutableString.addAttribute(NSParagraphStyleAttributeName,
+                                     value: style,
+                                     range: NSRange(
+                                        location:0,
+                                        length:12))
+        
+        p3Text.attributedText = myMutableString
+
+        
     }
     
   

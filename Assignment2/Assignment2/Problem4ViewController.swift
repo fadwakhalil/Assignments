@@ -12,8 +12,33 @@ class Problem4ViewController: UIViewController {
 
     @IBOutlet weak var p4Text: UITextView!
     @IBAction func p4Button(sender: AnyObject) {
-        p4Text.text = "I am Excited!"
 
+        let myString = "I am Excited!"
+        
+        var myMutableString = NSMutableAttributedString()
+        
+        let style = NSMutableParagraphStyle()
+        style.alignment = NSTextAlignment.Center
+
+        
+        myMutableString = NSMutableAttributedString(
+            string: myString,
+            attributes: [NSFontAttributeName:UIFont(
+                name: "Chalkduster",
+                size: 18.0)!])
+        
+        myMutableString.addAttribute(NSForegroundColorAttributeName,
+                                     value: UIColor.redColor(),
+                                     range: NSRange(
+                                        location:5,
+                                        length:8))
+        myMutableString.addAttribute(NSParagraphStyleAttributeName,
+                                     value: style,
+                                     range: NSRange(
+                                        location:0,
+                                        length:12))
+        
+        p4Text.attributedText = myMutableString
     }
     
     
