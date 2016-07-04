@@ -158,9 +158,12 @@
                                 <rect key="frame" x="-4" y="130" width="330" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Run"/>
+                                <connections>
+                                    <action selector="p4Button:" destination="rnA-An-geW" eventType="touchUpInside" id="F5P-4w-0Tw"/>
+                                </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="88L-pA-PnU">
-                                <rect key="frame" x="26" y="194" width="256" height="122"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vSw-AA-DTi">
+                                <rect key="frame" x="28" y="190" width="264" height="122"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -168,21 +171,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="88L-pA-PnU" firstAttribute="top" secondItem="t6i-kM-bIT" secondAttribute="bottom" constant="28" id="Euf-NI-mkf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="t6i-kM-bIT" secondAttribute="trailing" constant="-22" id="FW8-xA-aYb"/>
-                            <constraint firstItem="88L-pA-PnU" firstAttribute="top" secondItem="t6i-kM-bIT" secondAttribute="bottom" constant="28" id="PH2-C4-DvH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="88L-pA-PnU" secondAttribute="trailing" constant="22" id="PHM-aD-vws"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vSw-AA-DTi" secondAttribute="trailing" constant="12" id="Hv9-0n-FP3"/>
                             <constraint firstItem="Sqs-tZ-Z2T" firstAttribute="top" secondItem="lx9-kO-7wZ" secondAttribute="bottom" id="Von-mB-bKZ"/>
                             <constraint firstItem="Sqs-tZ-Z2T" firstAttribute="leading" secondItem="byF-cP-fRV" secondAttribute="leadingMargin" constant="-20" id="Wpr-Pj-NAA"/>
+                            <constraint firstItem="TLt-kD-xCh" firstAttribute="top" secondItem="vSw-AA-DTi" secondAttribute="bottom" constant="168" id="YRr-ZF-SXf"/>
                             <constraint firstItem="TLt-kD-xCh" firstAttribute="top" secondItem="Sqs-tZ-Z2T" secondAttribute="bottom" id="aNz-cg-ccr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Sqs-tZ-Z2T" secondAttribute="trailing" constant="-18" id="aQv-sx-gpZ"/>
                             <constraint firstItem="t6i-kM-bIT" firstAttribute="top" secondItem="lx9-kO-7wZ" secondAttribute="bottom" constant="66" id="awp-cQ-lwi"/>
+                            <constraint firstItem="vSw-AA-DTi" firstAttribute="top" secondItem="t6i-kM-bIT" secondAttribute="bottom" constant="24" id="jQI-ii-hha"/>
                             <constraint firstItem="t6i-kM-bIT" firstAttribute="leading" secondItem="byF-cP-fRV" secondAttribute="leadingMargin" constant="-20" id="lJn-Oy-rT7"/>
-                            <constraint firstItem="TLt-kD-xCh" firstAttribute="top" secondItem="88L-pA-PnU" secondAttribute="bottom" constant="164" id="nzj-ni-BFb"/>
-                            <constraint firstItem="88L-pA-PnU" firstAttribute="leading" secondItem="byF-cP-fRV" secondAttribute="leadingMargin" constant="10" id="r5R-oW-Slf"/>
+                            <constraint firstItem="vSw-AA-DTi" firstAttribute="leading" secondItem="byF-cP-fRV" secondAttribute="leadingMargin" constant="12" id="pxp-4Z-iua"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="p4Text" destination="vSw-AA-DTi" id="lBA-QX-uFG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrK-Vs-TRI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -208,6 +213,9 @@
                                 <rect key="frame" x="-4" y="130" width="328" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Run"/>
+                                <connections>
+                                    <action selector="p3Button:" destination="2dF-1U-A0l" eventType="touchUpInside" id="HrL-jl-6qu"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="WYI-iS-PfS">
                                 <rect key="frame" x="32" y="194" width="256" height="122"/>
@@ -232,6 +240,9 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="p3Text" destination="WYI-iS-PfS" id="4pA-po-lSG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NOO-tE-Y8x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

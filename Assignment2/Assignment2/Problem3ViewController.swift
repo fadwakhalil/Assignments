@@ -9,7 +9,11 @@
 import UIKit
 
 class Problem3ViewController: UIViewController {
+    @IBOutlet weak var p3Text: UITextView!
 
+    @IBAction func p3Button(sender: AnyObject) {
+        p3Text.text = "I am Hungry!"
+    }
     
   
     

@@ -10,6 +10,11 @@ import UIKit
 
 class Problem4ViewController: UIViewController {
 
+    @IBOutlet weak var p4Text: UITextView!
+    @IBAction func p4Button(sender: AnyObject) {
+        p4Text.text = "I am Excited!"
+
+    }
     
     
     override func viewDidLoad() {
