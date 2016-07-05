@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class Problem2ViewController: UIViewController {
         
     @IBOutlet weak var p2Text: UITextView!
@@ -36,6 +37,13 @@ class Problem2ViewController: UIViewController {
             }
         }
         
+/* Removed for Question 4
+         Engine().step(arr, N:N)
+*/
+ 
+        Engine1().step2(arr, N:N)
+
+/* Removed for Question 3
         var i_top = 0
         var j_lef = 0
         var i_bot = 0
@@ -83,7 +91,25 @@ class Problem2ViewController: UIViewController {
                 }
             }
         }
+*/
         
+/* Removed for Question 4
+         var narr = Engine().step(arr, N:N)
+ */
+        var narr = Engine1().step2(arr, N:N)
+
+        
+        var after = 0
+        for i in 0...M {
+            for j in 0...M {
+                if (narr[i][j] == true) {
+                    after = after + 1
+                }
+            }
+        }
+        
+        
+/* Removed for Question 3
         var after = 0
         for i in 0...M {
             for j in 0...M {
@@ -92,6 +118,7 @@ class Problem2ViewController: UIViewController {
                 }
             }
         }
+*/
         
         let myString = "I am Happy!\n" + "Number of living cells in before: \(before)\n" + "Number of living cells in after: \(after)     "
         
@@ -127,7 +154,6 @@ class Problem2ViewController: UIViewController {
                                         location:0,
                                         length:12))
         p2Text.attributedText = myMutableString
-        
         
         
         
