@@ -109,7 +109,7 @@ class Problem2ViewController: UIViewController {
         }
         
         
-/* Removed for Question 3
+/* Removed for Questions 3 and 4
         var after = 0
         for i in 0...M {
             for j in 0...M {
