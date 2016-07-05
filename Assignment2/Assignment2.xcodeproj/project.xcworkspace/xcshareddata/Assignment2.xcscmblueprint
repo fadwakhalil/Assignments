@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "77537ABF3426CC8812D419D29110C1C628B20CF3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "0DA6F33593966AEEAF6E9265B94CBC04228A232C" : 0,
+    "77537ABF3426CC8812D419D29110C1C628B20CF3" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "40B0FC3A-737D-4F28-8ACF-E5DA4BAFAE4D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "0DA6F33593966AEEAF6E9265B94CBC04228A232C" : "",
+    "77537ABF3426CC8812D419D29110C1C628B20CF3" : "s65gAssignments\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Assignment2",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Assignment2\/Assignment2.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "code.seas.harvard.edu:~fadwakhalil\/csci-e-92\/fadwakhalils-csci-e-92-project.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0DA6F33593966AEEAF6E9265B94CBC04228A232C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fadwakhalil\/Assignments.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "77537ABF3426CC8812D419D29110C1C628B20CF3"
+    }
+  ]
+}
