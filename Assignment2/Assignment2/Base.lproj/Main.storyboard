@@ -97,17 +97,19 @@
                         <subviews>
                             <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qbZ-1z-QEK">
                                 <rect key="frame" x="-4" y="64" width="328" height="416"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcX-A3-3W3">
+                                        <rect key="frame" x="0.0" y="66" width="328" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Run"/>
+                                        <connections>
+                                            <action selector="p2Button:" destination="Jvi-M5-bcj" eventType="touchUpInside" id="7jy-ZA-afQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TcX-A3-3W3">
-                                <rect key="frame" x="-4" y="130" width="328" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Run"/>
-                                <connections>
-                                    <action selector="p2Button:" destination="Jvi-M5-bcj" eventType="touchUpInside" id="7jy-ZA-afQ"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qCd-Jo-2T6">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qCd-Jo-2T6">
                                 <rect key="frame" x="36" y="194" width="248" height="122"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -116,17 +118,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="TcX-A3-3W3" firstAttribute="top" secondItem="z8A-tG-3ld" secondAttribute="bottom" constant="66" id="4nJ-Ef-jUi"/>
                             <constraint firstItem="qbZ-1z-QEK" firstAttribute="leading" secondItem="KdO-Wo-dhc" secondAttribute="leadingMargin" constant="-20" id="696-OL-X8f"/>
-                            <constraint firstItem="qCd-Jo-2T6" firstAttribute="top" secondItem="TcX-A3-3W3" secondAttribute="bottom" constant="28" id="FbC-ik-3KN"/>
                             <constraint firstItem="Jb9-B5-Oes" firstAttribute="top" secondItem="qCd-Jo-2T6" secondAttribute="bottom" constant="164" id="KsT-Js-okO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qbZ-1z-QEK" secondAttribute="trailing" constant="-20" id="OeQ-oB-B8d"/>
                             <constraint firstItem="qCd-Jo-2T6" firstAttribute="leading" secondItem="KdO-Wo-dhc" secondAttribute="leadingMargin" constant="20" id="OfE-cr-xf9"/>
                             <constraint firstItem="Jb9-B5-Oes" firstAttribute="top" secondItem="qbZ-1z-QEK" secondAttribute="bottom" id="R3T-if-Ksb"/>
                             <constraint firstItem="qbZ-1z-QEK" firstAttribute="top" secondItem="z8A-tG-3ld" secondAttribute="bottom" id="R6Q-23-mSo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qCd-Jo-2T6" secondAttribute="trailing" constant="20" id="UQ7-rK-HXi"/>
-                            <constraint firstItem="TcX-A3-3W3" firstAttribute="leading" secondItem="KdO-Wo-dhc" secondAttribute="leadingMargin" constant="-20" id="aFJ-ig-R3m"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="TcX-A3-3W3" secondAttribute="trailing" constant="-20" id="iPv-gB-hhH"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
