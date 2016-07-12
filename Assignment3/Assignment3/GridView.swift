@@ -54,7 +54,7 @@ import UIKit
         }
     }
    
-    var grid = [[CellState.Empty]]
+    var grid:[[CellState]] = [[CellState.Empty]]
 
     @IBInspectable var rows: Int = 20 {
         didSet {
@@ -76,12 +76,56 @@ import UIKit
         }
     }
     
+    @IBOutlet weak var output: GridView!
+    @IBAction func buttonPressed(sender: AnyObject) {
+        var arr = Array(count: rows, repeatedValue: Array<Bool>(count: cols, repeatedValue: false))
+        var bef = 0
+        var aft = 0
+        
+        for i in 0...rows-1 {
+            for j in 0...cols-1 {
+                if grid[i][j].rawValue == "Living"  {
+                    arr[i][j] = true
+                    bef = bef + 1
+                }
+                else {
+                    arr[i][j] = false
+                }
+            }
+        }
+        arr = Engine().step2(arr, N:rows)
+        for i in 0...rows-1 {
+            for j in 0...cols-1 {
+                if arr [i][j] == true  {
+                    grid[i][j] = .Living
+                    aft = aft + 1
+                    self.setNeedsDisplay()
+                }
+                else {
+                    grid[i][j] = .Empty
+                    self.setNeedsDisplay()
+                }
+            }
+        }
+        print (bef)
+        print (aft)
+        setNeedsDisplay()
+
+    }
+    
+    
     @IBInspectable var fillColor = UIColor.clearColor()
     @IBInspectable var xProportion = CGFloat(0.8)
     @IBInspectable var widthProportion = CGFloat(0.002)
     var plusHeight: CGFloat = 0.0
     var plusWidth: CGFloat = 0.0
-    
+    var xst: CGFloat = 0.0
+    var xen: CGFloat = 0.0
+    var yst: CGFloat = 0.0
+    var yen: CGFloat = 0.0
+    var colWidth: CGFloat = 0.0
+    var rowWidth: CGFloat = 0.0
+
     
     override func drawRect(rect: CGRect) {
         let path = UIBezierPath(rect: rect)
@@ -91,28 +135,26 @@ import UIKit
         let lineWidth: CGFloat = sqrt(bounds.width*bounds.height) * widthProportion
         plusHeight = bounds.height * xProportion
         plusWidth = bounds.width * xProportion
-        
         let plusPath = UIBezierPath()
         
         plusPath.lineWidth = lineWidth
         
         let x0: CGFloat = (bounds.width - plusWidth)/2
         let y0: CGFloat = (bounds.height - plusHeight)/2
+        xst = 0 + x0
+        xen = bounds.width - x0
+        yst = 0 + y0
+        yen = bounds.height - y0
         
-        let xst: CGFloat = 0 + x0
-        let xen: CGFloat = bounds.width - x0
-        
-        let yst: CGFloat = 0 + y0
-        let yen: CGFloat = bounds.height - y0
-        
-        
-        let stvert = plusWidth/CGFloat(cols)
+        colWidth = plusWidth/CGFloat(cols)
+        rowWidth = plusHeight/CGFloat(rows)
+
         var x1: CGFloat  = 0
         var x2: CGFloat  = 0
         var y1: CGFloat  = 0
         var y2: CGFloat  = 0
         for i in 0...cols {
-            x1 = stvert * CGFloat(i) + xst
+            x1 = colWidth * CGFloat(i) + xst
             y1 = yst
             x2 = x1
             y2 = yen
@@ -126,14 +168,13 @@ import UIKit
                 y:y2))
         }
         
-        let sthor = plusHeight/CGFloat(rows)
         var x11: CGFloat  = 0
         var x22: CGFloat  = 0
         var y11: CGFloat  = 0
         var y22: CGFloat  = 0
         for i in 0...rows {
             x11 = xst
-            y11 = sthor * CGFloat(i) + yst
+            y11 = rowWidth * CGFloat(i) + yst
             x22 = xen
             y22 = y11
             
@@ -150,15 +191,13 @@ import UIKit
         
         plusPath.stroke()
         
-        let xlen = plusWidth/CGFloat(cols)
-        let ylen = plusHeight/CGFloat(rows)
         var x: CGFloat  = 0
         var y: CGFloat  = 0
         for i in 0...rows-1 {
-            y = (CGFloat(i) * ylen) + yst
+            y = (CGFloat(i) * rowWidth) + yst
             for j in 0...cols-1 {
-                x = (CGFloat(j) * xlen) + xst
-                let ovalPath = UIBezierPath(ovalInRect: CGRectMake(x, y, xlen, ylen))
+                x = (CGFloat(j) * colWidth) + xst
+                let ovalPath = UIBezierPath(ovalInRect: CGRectMake(x, y, colWidth, rowWidth))
                 getCellStateColor(grid[i][j]).setFill()
                 ovalPath.fill()
             }//for j
@@ -168,35 +207,16 @@ import UIKit
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
             let position :CGPoint = touch.locationInView(self)
-            print(position.x)
-            print(position.y)
-            let xlen = plusWidth/CGFloat(cols)
-            let ylen = plusHeight/CGFloat(rows)
-            let rown =  (position.x / xlen)
-            let coln =  (position.y / ylen)
-            print(rown)
-            print (coln)
-            
-            let nx = CGFloat(rown) * xlen
-            let ny = CGFloat(coln) * ylen
-            
-            let ovalPath = UIBezierPath(ovalInRect: CGRectMake(nx, ny, xlen, ylen))
-            
-            
-            if ovalPath.containsPoint(position) {
-                grid[Int(rown)][Int(coln)] = .Living
-                getCellStateColor(grid[Int(rown)][Int(coln)]).setFill()
-                ovalPath.fill()
-
-            } else {
-                grid[Int(rown)][Int(coln)] = .Empty
-                
+            let xreal = position.x - xst
+            let yreal = position.y - yst
+            let rown =  Int (xreal / colWidth)
+            let coln =  Int(yreal / rowWidth)
+            if (rown >= 0 && rown < rows && coln >= 0 && coln < cols ) {
+                grid[coln][rown] = (CellState.Empty).toggle(grid[coln][rown])
+                setNeedsDisplay()
             }
-            
         }
-        
-        
-        
+                
     }
     
 

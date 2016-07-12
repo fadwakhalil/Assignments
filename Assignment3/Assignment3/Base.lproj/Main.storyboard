@@ -25,7 +25,7 @@
                                         <rect key="frame" x="8" y="670" width="398" height="30"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
-                                            <action selector="pushButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sm0-8T-bKy"/>
+                                            <action selector="buttonPressed:" destination="8bC-Xf-vdC" eventType="touchUpInside" id="ANQ-Yh-oFm"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -61,6 +61,9 @@
                                         <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="output" destination="8bC-Xf-vdC" id="oPr-Zk-jFB"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -98,9 +101,6 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-                    <connections>
-                        <outlet property="Grid" destination="t2o-IR-Gle" id="Ll0-1N-FC6"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
