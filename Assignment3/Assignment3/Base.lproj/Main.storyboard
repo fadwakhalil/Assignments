@@ -25,7 +25,7 @@
                                         <rect key="frame" x="8" y="670" width="398" height="30"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
-                                            <action selector="buttonPressed:" destination="t2o-IR-Gle" eventType="touchUpInside" id="adw-HV-cSl"/>
+                                            <action selector="buttonPressed:" destination="t2o-IR-Gle" eventType="touchUpInside" id="MPL-FF-crw"/>
                                         </connections>
                                     </button>
                                 </subviews>

@@ -99,11 +99,9 @@ import UIKit
                 if arr [i][j] == true  {
                     grid[i][j] = .Living
                     aft = aft + 1
-                    self.setNeedsDisplay()
                 }
                 else {
                     grid[i][j] = .Empty
-                    self.setNeedsDisplay()
                 }
             }
         }
