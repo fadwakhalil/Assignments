@@ -76,6 +76,9 @@
                             </stepper>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" stepValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="hrW-Ig-BXj">
                                 <rect key="frame" x="190" y="96" width="94" height="29"/>
+                                <connections>
+                                    <action selector="incrementRows:" destination="BYZ-38-t0r" eventType="valueChanged" id="LoS-0b-8Im"/>
+                                </connections>
                             </stepper>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -201,6 +204,9 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="dataRows" destination="rbz-WK-dqG" id="EVm-JM-3Mt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

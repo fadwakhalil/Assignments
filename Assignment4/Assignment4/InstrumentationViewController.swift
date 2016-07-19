@@ -9,23 +9,21 @@
 import UIKit
 
 protocol GridProtocol{
-/*
- an initializer accepting two ints, rows and cols
- two vars which are gettable only called rows and cols
- neighbors() as in Assignment 3 (i.e. taking a tuple of row, col, return an array of row,col tuples
- a subscript method which  allows you to get/set the CellState of a given row and column
- */
-    
     var rows: Int { get }
     var cols: Int { get }
-    
     init(rows: Int, cols: Int)
-
     func neighbors (rows: Int , cols: Int, N: Int) -> [(Int,Int)]
-    subscript(rows:Int, cols:Int) -> Bool {get set}
-    
+    subscript(rows:Int, cols:Int) -> CellState {get set}
 }
+
+enum CellState: String {
     
+    case Living = "Living"
+    case Empty = "Empty"
+    case Born = "Born"
+    case Died = "Died"
+}
+
 /*
  Create a Swift protocol called EngineDelegate protocol which declares the following:
  
@@ -33,28 +31,9 @@ protocol GridProtocol{
 */
 
 protocol EngineDelegate{
-    func engineDidUpdate(withGrid: GridProtocol, didUpdate:Int)
+    func engineDidUpdate(withGrid: GridProtocol)
 }
 
-/*
- Create a Swift protocol called EngineProtocol which declares the following:
- 
- a var delegate of type EngineDelegate
- a var grid of type GridProtocol (gettable only)
- a var refreshRate of type Double defaulting to zero
- a var refreshTimer of type NSTimer
- two vars rows and cols with no defaults
- an initializer taking rows and cols
- a func step()-> an object of type GridProtocol
- */
-
-protocol EngineProtocol{
-    var delegate: EngineDelegate { get set }
-    var grid: GridProtocol { get }
-    init(rows: Int)
-    init(cols: Int)
-    func step(arr: GridProtocol)
-}
 
 /*
  Create a class Grid which implements the GridProtocol and holds a collection of CellStates. 
@@ -63,23 +42,16 @@ protocol EngineProtocol{
 
 class Grid: GridProtocol {
    
-        enum CellState: String {
-            
-            case Living = "Living"
-            case Empty = "Empty"
-            case Born = "Born"
-            case Died = "Died"
-        }
     
     var rows: Int, cols: Int
-    private var grid:[[Bool]]
+    private var grid:[[CellState]]
     required init(rows: Int, cols: Int) {
         self.rows = rows
         self.cols = cols
-        grid = Array(count: rows, repeatedValue: Array(count: cols, repeatedValue: false))
+        grid = Array(count: rows, repeatedValue: Array(count: cols, repeatedValue: .Empty))
     }
     
-    subscript(rows: Int, column: Int) -> Bool {
+    subscript(rows: Int, column: Int) -> CellState {
         get {
             return grid[rows][cols]
             
@@ -90,9 +62,10 @@ class Grid: GridProtocol {
         }
 
         }
-    func neighbors (rows: Int , cols: Int, N: Int) -> [(Int,Int)] {
+    func neighbors (rows: Int , cols: Int) -> [(Int,Int)] {
         let i = rows
         let j = cols
+        let N=10
         let M = N - 1
         
         var i_top = 0
@@ -123,32 +96,55 @@ class Grid: GridProtocol {
 }
 
 /*
- Create a class called StandardEngine which  implements the EngineProtocol method, implementing the Game Of Life rules as in Assignment 3 only  using funcs of StandardEngine rather than top-level functions.
+ Create a Swift protocol called EngineProtocol which declares the following:
  
+ a var delegate of type EngineDelegate
+ a var grid of type GridProtocol (gettable only)
+ a var refreshRate of type Double defaulting to zero
+ a var refreshTimer of type NSTimer
+ two vars rows and cols with no defaults
+ an initializer taking rows and cols
+ a func step()-> an object of type GridProtocol
+ */
+
+protocol EngineProtocol{
+    var delegate: EngineDelegate { get set }
+    var grid: GridProtocol { get }
+    var refreshRate: Double { get set }
+    var refreshTimer: NSTimer { get set }
+    
+    init(rows: Int, cols: Int)
+    func step() -> GridProtocol 
+}
+
+/*
+ Create a class called StandardEngine which  implements the EngineProtocol method, implementing the Game Of Life rules as in Assignment 3 only  using funcs of StandardEngine rather than top-level functions.
+ */
 
 class StandardEngine: EngineProtocol {
     
+    var grid: GridProtocol = Grid(rows:10, cols:10)
     
-    func step2(arr: GridProtocol , N: Int) -> [[Bool]]{
+    func step() -> GridProtocol{
         
-        var narr = Array(count: N, repeatedValue: Array<Bool>(count: N, repeatedValue: false))
+        var narr = Grid(rows:10, cols:10)
         var count = 0
-        let M = N - 1
+        let M = grid.rows - 1
         
-        var res: [Bool] = [false,false,false,false,false,false,false,false]
+        var res: [CellState] = [.Empty,.Empty,.Empty,.Empty,.Empty,.Empty,.Empty,.Empty]
         
         for i in 0...M {
             for j in 0...M {
-                let ats = neighbors (i , cols: j, N: N)
+                let ats = grid.neighbors (i , cols: j)
                 
-                res[0] = arr[ats[0].0][ats[0].1]
-                res[1] = arr[ats[1].0][ats[1].1]
-                res[2] = arr[ats[2].0][ats[2].1]
-                res[3] = arr[ats[3].0][ats[3].1]
-                res[4] = arr[ats[4].0][ats[4].1]
-                res[5] = arr[ats[5].0][ats[5].1]
-                res[6] = arr[ats[6].0][ats[6].1]
-                res[7] = arr[ats[7].0][ats[7].1]
+                res[0] = grid[ats[0].0,ats[0].1]
+                res[1] = grid[ats[1].0,ats[1].1]
+                res[2] = grid[ats[2].0,ats[2].1]
+                res[3] = grid[ats[3].0,ats[3].1]
+                res[4] = grid[ats[4].0,ats[4].1]
+                res[5] = grid[ats[5].0,ats[5].1]
+                res[6] = grid[ats[6].0,ats[6].1]
+                res[7] = grid[ats[7].0,ats[7].1]
                 count = 0
                 for k in 0...7 {
                     if (res[k] == true){
@@ -157,35 +153,33 @@ class StandardEngine: EngineProtocol {
                 }
                 switch count {
                 case 0,1:
-                    narr[i][j] = false
+                    grid[i,j] = false
                 case 2:
-                    if (arr[i][j] == true){
-                        narr[i][j] = true
+                    if (grid[i,j] == true){
+                        grid[i,j] = true
                     }
                     else{
-                        narr[i][j] = false
+                        grid[i,j] = false
                     }
                 case 3:
-                    narr[i][j] = true
+                    grid[i,j] = true
                 default:
-                    narr[i][j] = false
+                    grid[i,j] = false
                     
                 }
             }
         }
-        
         return narr
     }
-
-    
 }
 
-*/
-class InstrumentationViewController: UIViewController {
 
-    var refreshRate: Double = 0
-    
-    var refreshTimer: NSTimer?
-    var rows: Int?
-    var cols: Int?
+class InstrumentationViewController: UIViewController {
+    @IBOutlet var dataRows: UITextField!
+
+    /*@IBAction func incrementRows(sender: AnyObject) {
+            example.rows += 10
+    }
+ */
+
 }
