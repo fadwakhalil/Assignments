@@ -74,13 +74,13 @@
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" stepValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="TK4-4b-Hvp">
                                 <rect key="frame" x="190" y="184" width="94" height="29"/>
                                 <connections>
-                                    <action selector="cols:" destination="BYZ-38-t0r" eventType="valueChanged" id="0YB-Lg-sTV"/>
+                                    <action selector="colsStepperAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="RWh-XB-9F7"/>
                                 </connections>
                             </stepper>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" stepValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="hrW-Ig-BXj">
                                 <rect key="frame" x="190" y="96" width="94" height="29"/>
                                 <connections>
-                                    <action selector="incrementRows:" destination="BYZ-38-t0r" eventType="valueChanged" id="pzk-dv-oKT"/>
+                                    <action selector="rowsStepperAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="xTW-DO-Ia9"/>
                                 </connections>
                             </stepper>
                         </subviews>
@@ -208,8 +208,10 @@
                     </tabBarItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="cols" destination="nlV-Lv-HVQ" id="6dY-FM-wHp"/>
-                        <outlet property="rows" destination="rbz-WK-dqG" id="OQm-TL-usz"/>
+                        <outlet property="colsStepper" destination="TK4-4b-Hvp" id="ijC-pN-iRF"/>
+                        <outlet property="colsValue" destination="nlV-Lv-HVQ" id="Ak4-98-AK9"/>
+                        <outlet property="rowsStepper" destination="hrW-Ig-BXj" id="WP5-Yr-R9Z"/>
+                        <outlet property="rowsValue" destination="rbz-WK-dqG" id="kI6-2P-4ax"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

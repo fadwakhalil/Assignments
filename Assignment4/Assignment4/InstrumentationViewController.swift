@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 /*
  an initializer accepting two ints, rows and cols
  two vars which are gettable only called rows and cols
@@ -17,12 +18,11 @@ protocol GridProtocol{
     var rows: Int { get }
     var cols: Int { get }
     init(rows: Int, cols: Int)
-    func neighbors(pos:(rows:Int,cols:Int)) -> [(Int,Int)]
-    //subscript(rows:Int, cols:Int) -> CellState {get set}
+    func neighbors(pos:(row:Int,col:Int)) -> [(Int,Int)]
+    subscript(rows:Int, cols:Int) -> CellState {get set}
 }
 
 enum CellState: String {
-    
     case Living = "Living"
     case Empty = "Empty"
     case Born = "Born"
@@ -30,56 +30,43 @@ enum CellState: String {
 }
 
 /*
- Create a Swift protocol called EngineDelegate protocol which declares the following:
- 
- engineDidUpdate(withGrid:) taking a GridProtocol object as an argument
-*/
-
-protocol EngineDelegate{
-    func engineDidUpdate(withGrid: GridProtocol)
-}
-
-
-/*
  Create a class Grid which implements the GridProtocol and holds a collection of CellStates. 
  */
 
 class Grid: GridProtocol {
     
-    typealias Position = (row:Int, col:Int)
-    var rows: Int, cols: Int
-
-    
-    let offsets:[(row:Int, col:Int)] = [
-        (-1,-1), (-1, 0), (-1, 1),
-        ( 0,-1),          ( 0, 1),
-        ( 1,-1), ( 1, 0), ( 1, 1)
-    ]
-    
-    
-    func neighbors(pos:(rows:Int,cols:Int)) -> [(Int,Int)]  {
-        return offsets.map { ((pos.rows + rows + $0.row) % rows, (pos.cols + cols + $0.col) % cols) }
-    }
-    
-    typealias CellState = Bool
     
     required init(rows: Int, cols: Int) {
         self.rows = rows
         self.cols = cols
     }
-    /*
+    
+    var rows: Int, cols: Int
+
+    typealias Position = (row:Int, col:Int)
+    
+    let offsets:[Position] = [
+        (-1,-1), (-1, 0), (-1, 1),
+        ( 0,-1),          ( 0, 1),
+        ( 1,-1), ( 1, 0), ( 1, 1)
+    ]
+
+     var grid:[[CellState]] = [[CellState.Empty]]
+    
+    func neighbors(pos:(row:Int, col:Int)) -> [(Int,Int)]  {
+        return offsets.map { ((pos.row + rows + $0.row) % rows, (pos.col + cols + $0.col) % cols) }
+    }
     subscript(rows: Int, column: Int) -> CellState {
         get {
             return grid[rows][cols]
-            
         }
-        
         set {
             grid[rows][cols] = newValue
         }
-     
-    }*/
+    }
     
+    
+
 }
 
 /*
@@ -94,11 +81,15 @@ class Grid: GridProtocol {
  a func step()-> an object of type GridProtocol
  */
 
-protocol EngineProtocol{
-    var delegate: EngineDelegate { get set }
+protocol EngineDelegate: class{
+    func engineDidUpdate(withGrid: GridProtocol)
+}
+
+protocol EngineProtocol: class{
+    var delegate: EngineDelegate? { get set }
     var grid: GridProtocol { get }
     var refreshRate: Double { get set }
-    var refreshTimer: NSTimer { get set }
+    //var refreshTimer: NSTimer { get set }
     var rows:Int { get set }
     var cols:Int { get set }
     init(rows: Int, cols: Int)
@@ -113,157 +104,130 @@ class StandardEngine: EngineProtocol {
     
     var rows:Int
     var cols:Int
-    typealias Position = (row:Int, col:Int)
-    typealias Cell = (position:Position, alive:CellState)
-
-    var delegate: EngineDelegate
-    var grid: GridProtocol
-    var refreshRate: Double
-    var refreshTimer: NSTimer
-
+    class singleton {
+        var rows : Int = 10
+        var cols : Int = 10
+        static let sharedInstanceRows = singleton()
+        static let sharedInstanceCols = singleton()
+    }
+        
+    var delegate: EngineDelegate?
     
-    func countLivingNeighbors(grid:[Cell], cell: Cell) -> Int {
-        let xz:Grid
-        return xz.neighbors((cell.position.row, cols:cell.position.col))
-            .reduce(0) { grid[$1.0*cols + $1.1].alive == .Living ? $0 + 1: $0 }
+    func engineDidUpdate(withGrid: GridProtocol) {
+        // do stuff like updating the UI
     }
     
-    func step(grid:[Cell]) -> [Cell] {
-        return grid.map {
-            switch countLivingNeighbors(grid, cell: $0) {
-            case 3, 2 where $0.alive == .Living : return (($0.position.row,$0.position.col), .Living)
-            default: return (($0.position.row,$0.position.col), .Died)
-            }
-        }
-    }
+//    var delegate: EngineDelegate? {
+//        return delegate!.engineDidUpdate(self)
+//    }
+    
+    var refreshRate: Double = 0
+    
+    
+//    
+//                let sel = #selector(StandardEngine.timerDidFire(_:))
+//                 var refreshTimer:NSTimer?
+//                refreshTimer = NSTimer.scheduledTimerWithTimeInterval(1,
+//                                                               target: self,
+//                                                               selector: sel,
+//                                                               userInfo: ["name": "fred"],
+//                                                               repeats: true)
+
 
     
-}
-
-
-//class StandardEngine: EngineProtocol {
-//    
-//    var grid: GridProtocol = Grid(rows:10, cols:10)
-//    
-//    func step() -> GridProtocol{
-//        
-//        //var narr = Grid(rows:10, cols:10)
-//        var count = 0
-//        let M = grid.rows - 1
-//        
-//        var res: [CellState] = [.Empty,.Empty,.Empty,.Empty,.Empty,.Empty,.Empty,.Empty]
-//        
-//        for i in 0...M {
-//            for j in 0...M {
-//                let ats = grid.neighbors (i , cols: j)
-//                
-//                res[0] = grid[ats[0].0,ats[0].1]
-//                res[1] = grid[ats[1].0,ats[1].1]
-//                res[2] = grid[ats[2].0,ats[2].1]
-//                res[3] = grid[ats[3].0,ats[3].1]
-//                res[4] = grid[ats[4].0,ats[4].1]
-//                res[5] = grid[ats[5].0,ats[5].1]
-//                res[6] = grid[ats[6].0,ats[6].1]
-//                res[7] = grid[ats[7].0,ats[7].1]
-//                count = 0
-//                for k in 0...7 {
-//                    if (res[k] == true){
-//                        count = count + 1
-//                    }
-//                }
-//                switch count {
-//                case 0,1:
-//                    grid[i,j] = false
-//                case 2:
-//                    if (grid[i,j] == true){
-//                        grid[i,j] = true
-//                    }
-//                    else{
-//                        grid[i,j] = false
-//                    }
-//                case 3:
-//                    grid[i,j] = true
-//                default:
-//                    grid[i,j] = false
-//                    
-//                }
+    required init(rows: Int, cols: Int) {
+        self.rows = rows
+        self.cols = cols
+    }
+    
+    var grid: GridProtocol {
+        return self.grid
+    }
+    
+//    var grid: GridProtocol {
+//        didSet {
+//            if let delegate = delegate {
+//                delegate.engineDidUpdate(self.grid)
 //            }
 //        }
-//        return grid
 //    }
-//}
 
-
-
-protocol IncrementalProtocol {
-    var rows: UInt { get set }
-    var cols: UInt { get set }
-    var delegate: IncrementalDelegateProtocol? { get set }
-    func step() -> [[Bool]]
-}
-
-protocol IncrementalDelegateProtocol {
-    func increment(increment: Incremental, didUpdateRows:UInt)
-    func increment(increment: Incremental, didUpdateCols:UInt)
     
-}
-
-class Incremental : IncrementalProtocol {
-    var rows: UInt = 0 {
-        didSet {
-            if let delegate = delegate {
-                delegate.increment(self, didUpdateRows: self.rows)
+    func step() -> GridProtocol {
+        
+        let N = grid.rows
+        var narr = Array(count: N, repeatedValue: Array<CellState>(count: N, repeatedValue: .Empty))
+        var count = 0
+        let M = N - 1
+        
+        var res: [CellState] = [.Empty,.Empty,.Empty,.Empty,.Empty,.Empty,.Empty,.Empty]
+        
+        for i in 0...M {
+            for j in 0...M {
+                let ats = grid.neighbors ((i , j))
+                
+                res[0] = grid[(ats[0].0, ats[0].1)]
+                res[1] = grid[(ats[1].0, ats[1].1)]
+                res[2] = grid[(ats[2].0, ats[2].1)]
+                res[3] = grid[(ats[3].0, ats[3].1)]
+                res[4] = grid[(ats[4].0, ats[4].1)]
+                res[5] = grid[(ats[5].0, ats[5].1)]
+                res[6] = grid[(ats[6].0, ats[6].1)]
+                res[7] = grid[(ats[7].0, ats[7].1)]
+                count = 0
+                for k in 0...7 {
+                    if (res[k] == .Living){
+                        count = count + 1
+                    }
+                }
+                switch count {
+                case 0,1:
+                    narr[i][j] = .Empty
+                case 2:
+                    if (grid[(i,j)] == .Living){
+                        narr[i][j] = .Living
+                    }
+                    else{
+                        narr[i][j] = .Empty
+                    }
+                case 3:
+                    narr[i][j] = .Living
+                default:
+                    narr[i][j] = .Empty
+                    
+                }
             }
         }
+        return grid
     }
-    var cols: UInt = 0
-    var delegate: IncrementalDelegateProtocol?
-    func step() -> [[Bool]] {
-        return [[false]]
-    }
+    
+    
+    //delegate?.engineDidUpdate(self)
+    
 }
 
-class IncrementalDelegate: IncrementalDelegateProtocol {
-    func increment(increment: Incremental, didUpdateRows: UInt) {
-    }
-    func increment(increment: Incremental, didUpdateCols: UInt) {
-    }
 
-}
-
-class InstrumentationViewController: UIViewController, IncrementalDelegateProtocol {
+class InstrumentationViewController: UIViewController {
     
-    var increment: IncrementalProtocol!
-    @IBOutlet weak var rows: UITextField!
-    @IBOutlet weak var cols: UITextField!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        increment = Incremental()
-        increment.delegate = self
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    @IBAction func incrementRows(sender: AnyObject) {
-            increment.rows += 10
-    }
-    @IBAction func cols(sender: AnyObject) {
-            increment.cols += 10
+    @IBOutlet weak var rowsStepper: UIStepper!
+    @IBOutlet weak var colsStepper: UIStepper!
+    @IBOutlet weak var rowsValue: UITextField!
+    @IBOutlet weak var colsValue: UITextField!
+    @IBAction func rowsStepperAction(sender: AnyObject) {
+        rowsValue.text = "\(Int(rowsStepper.value))"
+        NSNotificationCenter.defaultCenter().postNotificationName("rowValue", object: rowsStepper.value)
+        //NSNotificationCenter.defaultCenter().postNotificationName("grid", object: StandardEngine.self)
 
     }
+    @IBAction func colsStepperAction(sender: AnyObject) {
+        colsValue.text = "\(Int(colsStepper.value))"
+        NSNotificationCenter.defaultCenter().postNotificationName("colValue", object: colsStepper.value)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.rowsValue.text = String(StandardEngine.singleton.sharedInstanceRows.rows)
+        self.colsValue.text = String(StandardEngine.singleton.sharedInstanceCols.cols)
 
-    func increment(increment: Incremental, didUpdateRows modelRows: UInt) {
-        rows.text  = String(modelRows)
     }
-    func increment(increment: Incremental, didUpdateCols modelCols: UInt) {
-        cols.text  = String(modelCols)
-    }
-    
-    
 }
