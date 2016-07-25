@@ -9,7 +9,7 @@
         <!--Instrumentation-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="InstrumentationViewController" customModule="Assignment4" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SimulationViewController" customModule="Assignment4" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -74,13 +74,13 @@
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" stepValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="TK4-4b-Hvp">
                                 <rect key="frame" x="190" y="184" width="94" height="29"/>
                                 <connections>
-                                    <action selector="colsStepperAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="RWh-XB-9F7"/>
+                                    <action selector="incrementCols:" destination="BYZ-38-t0r" eventType="valueChanged" id="2qw-fj-4gD"/>
                                 </connections>
                             </stepper>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" stepValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="hrW-Ig-BXj">
                                 <rect key="frame" x="190" y="96" width="94" height="29"/>
                                 <connections>
-                                    <action selector="rowsStepperAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="xTW-DO-Ia9"/>
+                                    <action selector="incrementRows:" destination="BYZ-38-t0r" eventType="valueChanged" id="tfi-sk-wwY"/>
                                 </connections>
                             </stepper>
                         </subviews>
@@ -208,10 +208,8 @@
                     </tabBarItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="colsStepper" destination="TK4-4b-Hvp" id="ijC-pN-iRF"/>
-                        <outlet property="colsValue" destination="nlV-Lv-HVQ" id="Ak4-98-AK9"/>
-                        <outlet property="rowsStepper" destination="hrW-Ig-BXj" id="WP5-Yr-R9Z"/>
-                        <outlet property="rowsValue" destination="rbz-WK-dqG" id="kI6-2P-4ax"/>
+                        <outlet property="cols" destination="nlV-Lv-HVQ" id="hLd-7S-oPM"/>
+                        <outlet property="rows" destination="rbz-WK-dqG" id="8bG-aw-CaY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -277,6 +275,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Simulation " image="magnifying glass" selectedImage="magnifying glass" id="nJD-Pm-ARy"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="viewForLayer" destination="iRW-9c-G5a" id="aC5-5t-leo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Nc-TO-j37" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

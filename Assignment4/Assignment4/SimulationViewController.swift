@@ -8,264 +8,104 @@
 
 import UIKit
 
-class SimulationViewController: UIViewController {
-    var rows:Int = 0
-    var cols:Int = 0
-    
-
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimulationViewController.getRowsFromNotification(_:)), name: "rowValue", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimulationViewController.getColsFromNotification(_:)), name: "colValue", object: nil)
+    class SimulationViewController: UIViewController, EngineDelegate {
+        var firsttab: EngineProtocol?
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimulationViewController.getStandardEngine(_:)), name: "grid", object: nil)
-
-//        var example: EngineProtocol!
-//        StandardEngine.singleton.rows = 20
-//        example = StandardEngine.sharedInstance
-//        
-//        engineDidUpdate.delegate = self
-
-
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    
-    func getRowsFromNotification (notification: NSNotification)   {
-        if (notification.object != nil) {
-            rows = Int(String(notification.object!))!
+        @IBOutlet weak var viewForLayer: UIView!
+        
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            InstrumentationViewController.sharedInstance.rows = 10
+            InstrumentationViewController.sharedInstance.cols = 10
+            firsttab = InstrumentationViewController.sharedInstance
+            firsttab!.grid = Grid(rows: firsttab!.rows, cols: firsttab!.cols)
+            firsttab!.delegate = self
+            let barViewControllers = self.tabBarController?.viewControllers
+            let vc2 = barViewControllers![1] as! SimulationViewController
+            vc2.setUpLayer(firsttab!.grid!)
+        }
+        //    override func drawRect(rect: CGRect) {
+        //        let path = UIBezierPath(rect: rect)
+        //        fillColor.setFill()
+        //        path.fill()
+        //    }
+        
+        func setUpLayer(grid:GridProtocol) {
+            //print (grid[1,1])
+            let l = CAShapeLayer()
+            //let pa = l.path!
+            l.frame = CGRect(x: 50, y: 50, width: 50, height: 50)
+            l.path = UIBezierPath(roundedRect: l.bounds, cornerRadius: 20).CGPath
+            l.fillColor = UIColor.greenColor().CGColor
+            
+            
+            //l.backgroundColor = UIColor.redColor().CGColor
+            
+            // 1
+            //l.backgroundColor = UIColor.redColor().CGColor
+            //l.cornerRadius = 20
+            // 2
+            // 3
+            //l.fillColor = UIColor.blueColor().CGColor
+            //l.path = UIBezierPath(roundedRect: l.bounds, byRoundingCorners: .BottomLeft, cornerRadii: CGSize(width: 20, height: 20)).CGPath
+            self.view.layer.addSublayer(l)
+        }
+        
+        override func viewWillAppear(animated: Bool) {
+            super.viewWillAppear(animated)
+        }
+        
+        @IBAction func incrementRows(sender: AnyObject) {
+            firsttab!.rows += 10
+            rows.text = String(firsttab!.rows)
+        }
+        
+        @IBAction func incrementCols(sender: AnyObject) {
+            firsttab!.cols += 10
+            cols.text = String(firsttab!.cols)
+        }
+        @IBOutlet weak var rows: UITextField!
+        @IBOutlet weak var cols: UITextField!
+        func engineDidUpdate(firsttab: InstrumentationViewController, didUpdateRows modelRows: Int) {
+        }
+        func engineDidUpdate(firsttab: InstrumentationViewController, didUpdateCols modelCols: Int) {
         }
     }
     
-    func getColsFromNotification (notification: NSNotification)  {
-        if (notification.object != nil) {
-            cols = Int(String(notification.object!))!
+    class GridView: UIView {
+        var fillColor = UIColor.greenColor()
+        var grid:GridProtocol?
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
         }
-    }
-
-//    func getStandardEngine (notification: NSNotification) {
-//        print("feras")
-//    }
-    
-    
-    @IBInspectable var livingColor: UIColor = UIColor.clearColor()
-    @IBInspectable var emptyColor: UIColor = UIColor.clearColor()
-    @IBInspectable var bornColor: UIColor = UIColor.clearColor().colorWithAlphaComponent(0.6)
-    @IBInspectable var diedColor: UIColor = UIColor.clearColor().colorWithAlphaComponent(0.6)
-    @IBInspectable var gridColor: UIColor = UIColor.clearColor()
-    @IBInspectable var gridWidth: CGFloat = 2.0
-    
-    
-//    enum CellState: String {
-//        
-//        case Living = "Living"
-//        case Empty = "Empty"
-//        case Born = "Born"
-//        case Died = "Died"
-//        
-//        func description() -> String {
-//            switch self {
-//                
-//            default:
-//                return String(self.rawValue)
-//            }
-//        }
-//        
-//        static func allValues() -> [CellState] {
-//            return [.Living, .Empty, .Born, .Died]
-//        }
-//        
-//        func toggle(value:CellState)-> CellState {
-//            switch(value) {
-//            case .Empty, .Died: return .Living
-//            case .Living, .Born: return .Empty
-//            }
-//        }
-//    }
-    
-//    func getCellStateColor(value:CellState) -> UIColor {
-//        switch value {
-//        case .Empty: return emptyColor
-//        case .Died: return diedColor
-//        case .Born: return bornColor
-//        default: return livingColor
-//        }
-//    }
-//    
-//    var grid:[[CellState]] = [[CellState.Empty]]
-    
-//    @IBInspectable var rows: Int = rows {
-//        didSet {
-//            var ncol = 0
-//            if grid.count > 0 {
-//                ncol = grid[0].count
-//                setNeedsDisplay()
-//            }
-//            
-//            grid = Array(count: rows, repeatedValue: Array<CellState>(count: ncol, repeatedValue: CellState.Empty))
-//        }
-//    }
-//    
-//    @IBInspectable var cols: Int = 20 {
-//        didSet {
-//            let nrow = grid.count
-//            grid = Array(count: nrow, repeatedValue: Array<CellState>(count: cols, repeatedValue: CellState.Empty))
-//            setNeedsDisplay()
-//        }
-//    }
-//    
-//    @IBOutlet weak var output: GridView!
-//    @IBAction func buttonPressed(sender: AnyObject) {
-//        var arr = Array(count: rows, repeatedValue: Array<Bool>(count: cols, repeatedValue: false))
-//        var bef = 0
-//        var aft = 0
-//        
-//        for i in 0...rows-1 {
-//            for j in 0...cols-1 {
-//                if grid[i][j].rawValue == "Living"  {
-//                    arr[i][j] = true
-//                    bef = bef + 1
-//                }
-//                else {
-//                    arr[i][j] = false
-//                }
-//            }
-//        }
-//        var xy: EngineProtocol
-//        
-//        
-//        
-//        arr = InstrumentationViewController..step()
-//        
-//        for i in 0...rows-1 {
-//            for j in 0...cols-1 {
-//                if arr [i][j] == true  {
-//                    grid[i][j] = .Living
-//                    aft = aft + 1
-//                }
-//                else {
-//                    grid[i][j] = .Empty
-//                }
-//            }
-//        }
-//        print (bef)
-//        print (aft)
-//        setNeedsDisplay()
-//        
-//    }
-//    
-//    
-//    @IBInspectable var fillColor = UIColor.clearColor()
-//    @IBInspectable var xProportion = CGFloat(0.8)
-//    @IBInspectable var widthProportion = CGFloat(0.002)
-//    var plusHeight: CGFloat = 0.0
-//    var plusWidth: CGFloat = 0.0
-//    var xst: CGFloat = 0.0
-//    var xen: CGFloat = 0.0
-//    var yst: CGFloat = 0.0
-//    var yen: CGFloat = 0.0
-//    var colWidth: CGFloat = 0.0
-//    var rowWidth: CGFloat = 0.0
-//    
-//    
-//    override func drawRect(rect: CGRect) {
-//        let path = UIBezierPath(rect: rect)
-//        fillColor.setFill()
-//        path.fill()
-//        
-//        let lineWidth: CGFloat = sqrt(bounds.width*bounds.height) * widthProportion
-//        plusHeight = bounds.height * xProportion
-//        plusWidth = bounds.width * xProportion
-//        let plusPath = UIBezierPath()
-//        
-//        plusPath.lineWidth = lineWidth
-//        
-//        let x0: CGFloat = (bounds.width - plusWidth)/2
-//        let y0: CGFloat = (bounds.height - plusHeight)/2
-//        xst = 0 + x0
-//        xen = bounds.width - x0
-//        yst = 0 + y0
-//        yen = bounds.height - y0
-//        
-//        colWidth = plusWidth/CGFloat(cols)
-//        rowWidth = plusHeight/CGFloat(rows)
-//        
-//        var x1: CGFloat  = 0
-//        var x2: CGFloat  = 0
-//        var y1: CGFloat  = 0
-//        var y2: CGFloat  = 0
-//        for i in 0...cols {
-//            x1 = colWidth * CGFloat(i) + xst
-//            y1 = yst
-//            x2 = x1
-//            y2 = yen
-//            
-//            plusPath.moveToPoint(CGPoint(
-//                x:x1,
-//                y:y1))
-//            
-//            plusPath.addLineToPoint(CGPoint(
-//                x:x2,
-//                y:y2))
-//        }
-//        
-//        var x11: CGFloat  = 0
-//        var x22: CGFloat  = 0
-//        var y11: CGFloat  = 0
-//        var y22: CGFloat  = 0
-//        for i in 0...rows {
-//            x11 = xst
-//            y11 = rowWidth * CGFloat(i) + yst
-//            x22 = xen
-//            y22 = y11
-//            
-//            plusPath.moveToPoint(CGPoint(
-//                x:x11,
-//                y:y11))
-//            
-//            plusPath.addLineToPoint(CGPoint(
-//                x:x22,
-//                y:y22))
-//        }
-//        
-//        gridColor.setStroke()
-//        
-//        plusPath.stroke()
-//        
-//        var x: CGFloat  = 0
-//        var y: CGFloat  = 0
-//        for i in 0...rows-1 {
-//            y = (CGFloat(i) * rowWidth) + yst
-//            for j in 0...cols-1 {
-//                x = (CGFloat(j) * colWidth) + xst
-//                let ovalPath = UIBezierPath(ovalInRect: CGRectMake(x, y, colWidth, rowWidth))
-//                getCellStateColor(grid[i][j]).setFill()
-//                ovalPath.fill()
-//            }//for j
-//        }//for i
-//    }
-//    
-//    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        if let touch = touches.first {
-//            let position :CGPoint = touch.locationInView(self)
-//            let xreal = position.x - xst
-//            let yreal = position.y - yst
-//            let rown =  Int (xreal / colWidth)
-//            let coln =  Int(yreal / rowWidth)
-//            if (rown >= 0 && rown < rows && coln >= 0 && coln < cols ) {
-//                grid[coln][rown] = (CellState.Empty).toggle(grid[coln][rown])
-//                setNeedsDisplay()
-//            }
-//        }
-//    }
-//
-//    
+        
+        override func drawRect(rect: CGRect) {
+            let path = UIBezierPath(rect: rect)
+            fillColor.setFill()
+            path.fill()
+        }
 }
+
+
+/*
+ override func viewWillAppear(animated: Bool) {
+ super.viewWillAppear(animated)
+ firsttab!.grid![0,4] = .Living
+ }
+ */
+
+
+/*
+ func engineDidUpdate(firsttab: InstrumentationViewController, didUpdateRows modelRows: Int) {
+ //rows.text  = String(modelRows)
+ //firsttab.grid = Grid(rows: 10,cols: 10)
+ //firsttab.grid?.cols = 0
+ //print(modelRows)
+ }
+ 
+ //print (firsttab!.grid![0,4])
+ */
+
+

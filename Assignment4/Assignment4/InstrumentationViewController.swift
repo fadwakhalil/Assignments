@@ -8,19 +8,7 @@
 
 import UIKit
 import Foundation
-/*
- an initializer accepting two ints, rows and cols
- two vars which are gettable only called rows and cols
- neighbors() as in Assignment 3 (i.e. taking a tuple of row, col, return an array of row,col tuples
- a subscript method which  allows you to get/set the CellState of a given row and column
-*/
-protocol GridProtocol{
-    var rows: Int { get }
-    var cols: Int { get }
-    init(rows: Int, cols: Int)
-    func neighbors(pos:(row:Int,col:Int)) -> [(Int,Int)]
-    subscript(rows:Int, cols:Int) -> CellState {get set}
-}
+
 
 enum CellState: String {
     case Living = "Living"
@@ -29,20 +17,27 @@ enum CellState: String {
     case Died = "Died"
 }
 
-/*
- Create a class Grid which implements the GridProtocol and holds a collection of CellStates. 
- */
+protocol GridProtocol{
+    var rows: Int { get set }
+    var cols: Int { get set }
+    init(rows: Int, cols: Int)
+    func neighbors(pos:(row:Int,col:Int)) -> [(Int,Int)]
+    subscript(row:Int, col:Int) -> CellState? {get set}
+}
 
 class Grid: GridProtocol {
+    //var grid:[[CellState]] = [[CellState.Empty]]
+    var cells : [CellState]?
     
+    var rows: Int = 10
+    var cols: Int = 10
     
     required init(rows: Int, cols: Int) {
         self.rows = rows
         self.cols = cols
+        self.cells = Array<CellState>(count: rows*cols, repeatedValue: .Empty)
     }
     
-    var rows: Int, cols: Int
-
     typealias Position = (row:Int, col:Int)
     
     let offsets:[Position] = [
@@ -50,184 +45,72 @@ class Grid: GridProtocol {
         ( 0,-1),          ( 0, 1),
         ( 1,-1), ( 1, 0), ( 1, 1)
     ]
-
-     var grid:[[CellState]] = [[CellState.Empty]]
     
     func neighbors(pos:(row:Int, col:Int)) -> [(Int,Int)]  {
         return offsets.map { ((pos.row + rows + $0.row) % rows, (pos.col + cols + $0.col) % cols) }
     }
-    subscript(rows: Int, column: Int) -> CellState {
+    
+    subscript(row: Int, col: Int) -> CellState? {
         get {
-            return grid[rows][cols]
+            if cells!.count < Int(row*col) { return nil }
+            return cells![Int(row * col + col)]
         }
-        set {
-            grid[rows][cols] = newValue
+        set (newValue) {
+            if newValue == nil {  return }
+            if row < 0 || row >= rows || col < 0 || col >= cols {  return }
+            let cellRow = row * cols + col
+            cells![Int(cellRow)] = newValue!
         }
     }
-    
-    
-
 }
 
-/*
- Create a Swift protocol called EngineProtocol which declares the following:
- 
- a var delegate of type EngineDelegate
- a var grid of type GridProtocol (gettable only)
- a var refreshRate of type Double defaulting to zero
- a var refreshTimer of type NSTimer
- two vars rows and cols with no defaults
- an initializer taking rows and cols
- a func step()-> an object of type GridProtocol
- */
 
-protocol EngineDelegate: class{
-    func engineDidUpdate(withGrid: GridProtocol)
-}
-
-protocol EngineProtocol: class{
+protocol EngineProtocol {
+    var rows: Int { get set }
+    var cols: Int { get set }
+    var grid: GridProtocol? { get set}
     var delegate: EngineDelegate? { get set }
-    var grid: GridProtocol { get }
-    var refreshRate: Double { get set }
-    //var refreshTimer: NSTimer { get set }
-    var rows:Int { get set }
-    var cols:Int { get set }
-    init(rows: Int, cols: Int)
-    func step() -> GridProtocol 
+    func step() -> [[Bool]]
 }
 
-/*
- Create a class called StandardEngine which  implements the EngineProtocol method, implementing the Game Of Life rules as in Assignment 3 only  using funcs of StandardEngine rather than top-level functions.
- */
+protocol EngineDelegate {
+    //func engineDidUpdate(withGrid: GridProtocol)
+    func engineDidUpdate(firsttab: InstrumentationViewController, didUpdateRows:Int)
+    func engineDidUpdate(firsttab: InstrumentationViewController, didUpdateCols:Int)
+}
 
-class StandardEngine: EngineProtocol {
+
+class InstrumentationViewController : UIViewController,EngineProtocol {
     
-    var rows:Int
-    var cols:Int
-    class singleton {
-        var rows : Int = 10
-        var cols : Int = 10
-        static let sharedInstanceRows = singleton()
-        static let sharedInstanceCols = singleton()
+    private static var _sharedInstance = InstrumentationViewController()
+    static var sharedInstance: InstrumentationViewController {
+        get {
+            return _sharedInstance
+        }
     }
-        
+    
+    var grid: GridProtocol?
+    
     var delegate: EngineDelegate?
     
-    func engineDidUpdate(withGrid: GridProtocol) {
-        // do stuff like updating the UI
+    func step() -> [[Bool]] {
+        return [[false]]
     }
     
-//    var delegate: EngineDelegate? {
-//        return delegate!.engineDidUpdate(self)
-//    }
-    
-    var refreshRate: Double = 0
-    
-    
-//    
-//                let sel = #selector(StandardEngine.timerDidFire(_:))
-//                 var refreshTimer:NSTimer?
-//                refreshTimer = NSTimer.scheduledTimerWithTimeInterval(1,
-//                                                               target: self,
-//                                                               selector: sel,
-//                                                               userInfo: ["name": "fred"],
-//                                                               repeats: true)
-
-
-    
-    required init(rows: Int, cols: Int) {
-        self.rows = rows
-        self.cols = cols
-    }
-    
-    var grid: GridProtocol {
-        return self.grid
-    }
-    
-//    var grid: GridProtocol {
-//        didSet {
-//            if let delegate = delegate {
-//                delegate.engineDidUpdate(self.grid)
-//            }
-//        }
-//    }
-
-    
-    func step() -> GridProtocol {
-        
-        let N = grid.rows
-        var narr = Array(count: N, repeatedValue: Array<CellState>(count: N, repeatedValue: .Empty))
-        var count = 0
-        let M = N - 1
-        
-        var res: [CellState] = [.Empty,.Empty,.Empty,.Empty,.Empty,.Empty,.Empty,.Empty]
-        
-        for i in 0...M {
-            for j in 0...M {
-                let ats = grid.neighbors ((i , j))
-                
-                res[0] = grid[(ats[0].0, ats[0].1)]
-                res[1] = grid[(ats[1].0, ats[1].1)]
-                res[2] = grid[(ats[2].0, ats[2].1)]
-                res[3] = grid[(ats[3].0, ats[3].1)]
-                res[4] = grid[(ats[4].0, ats[4].1)]
-                res[5] = grid[(ats[5].0, ats[5].1)]
-                res[6] = grid[(ats[6].0, ats[6].1)]
-                res[7] = grid[(ats[7].0, ats[7].1)]
-                count = 0
-                for k in 0...7 {
-                    if (res[k] == .Living){
-                        count = count + 1
-                    }
-                }
-                switch count {
-                case 0,1:
-                    narr[i][j] = .Empty
-                case 2:
-                    if (grid[(i,j)] == .Living){
-                        narr[i][j] = .Living
-                    }
-                    else{
-                        narr[i][j] = .Empty
-                    }
-                case 3:
-                    narr[i][j] = .Living
-                default:
-                    narr[i][j] = .Empty
-                    
-                }
+    var rows: Int = 10 {
+        didSet {
+            if let delegate = delegate {
+                delegate.engineDidUpdate(self, didUpdateRows: self.rows)
             }
         }
-        return grid
+    }
+    var cols: Int = 10 {
+        didSet {
+            if let delegate = delegate {
+                delegate.engineDidUpdate(self, didUpdateCols: self.cols)
+            }
+        }
     }
     
-    
-    //delegate?.engineDidUpdate(self)
-    
-}
+}//EndClass
 
-
-class InstrumentationViewController: UIViewController {
-    
-    @IBOutlet weak var rowsStepper: UIStepper!
-    @IBOutlet weak var colsStepper: UIStepper!
-    @IBOutlet weak var rowsValue: UITextField!
-    @IBOutlet weak var colsValue: UITextField!
-    @IBAction func rowsStepperAction(sender: AnyObject) {
-        rowsValue.text = "\(Int(rowsStepper.value))"
-        NSNotificationCenter.defaultCenter().postNotificationName("rowValue", object: rowsStepper.value)
-        //NSNotificationCenter.defaultCenter().postNotificationName("grid", object: StandardEngine.self)
-
-    }
-    @IBAction func colsStepperAction(sender: AnyObject) {
-        colsValue.text = "\(Int(colsStepper.value))"
-        NSNotificationCenter.defaultCenter().postNotificationName("colValue", object: colsStepper.value)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.rowsValue.text = String(StandardEngine.singleton.sharedInstanceRows.rows)
-        self.colsValue.text = String(StandardEngine.singleton.sharedInstanceCols.cols)
-
-    }
-}
