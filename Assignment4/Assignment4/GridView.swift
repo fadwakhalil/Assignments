@@ -112,6 +112,11 @@ import UIKit
 //    }
 //    
 //    
+    
+    let rows = StandardEngine.sharedInstance.rows
+    let cols = StandardEngine.sharedInstance.cols
+    var grid = StandardEngine.sharedInstance.grid
+
     @IBInspectable var fillColor = UIColor.clearColor()
     @IBInspectable var xProportion = CGFloat(0.8)
     @IBInspectable var widthProportion = CGFloat(0.002)
@@ -126,9 +131,43 @@ import UIKit
     
     @IBOutlet weak var output: GridView!
     @IBAction func buttonPushed(sender: AnyObject) {
-        let arr = StandardEngine.sharedInstance.grid
+        var arr = StandardEngine.sharedInstance.grid
         //StandardEngine.sharedInstance.grid[1,1] = .Alive
         print (arr[1,1])
+        var bef = 0
+        var aft = 0
+        
+        for i in 0...rows-1 {
+            for j in 0...cols-1 {
+                if grid[i,j] == .Alive  {
+                            arr[i,j] = .Alive
+                            bef = bef + 1
+                        }
+                        else {
+                            arr[i,j] = .Empty
+                        }
+                    }
+                }
+        
+                for i in 0...rows-1 {
+                    for j in 0...cols-1 {
+                        if arr [i,j] == .Alive  {
+                            grid[i,j] = .Alive
+                            aft = aft + 1
+                        }
+                        else {
+                            grid[i,j] = .Empty
+                        }
+                    }
+                }
+
+        
+        //let myValues: [String:AnyObject] = ["bef" : bef, "aft" : aft]
+        NSNotificationCenter.defaultCenter().postNotificationName("gridUpdated",
+                                                                  object: nil,
+                                                                  userInfo: ["bef" : bef, "aft" : aft])
+        
+
     }
     
     func getCellStateColor(value:CellState) -> UIColor {
@@ -159,10 +198,6 @@ import UIKit
         xen = bounds.width - x0
         yst = 0 + y0
         yen = bounds.height - y0
-        
-        let rows = StandardEngine.sharedInstance.rows
-        let cols = StandardEngine.sharedInstance.cols
-        let grid = StandardEngine.sharedInstance.grid
         
         
         colWidth = plusWidth/CGFloat(cols)
@@ -209,7 +244,7 @@ import UIKit
         gridColor.setStroke()
         
         plusPath.stroke()
-        print(rowWidth)
+        //print(rowWidth)
         
         var x: CGFloat  = 0
         var y: CGFloat  = 0
@@ -219,23 +254,23 @@ import UIKit
                 x = (CGFloat(j) * colWidth) + xst
                 let ovalPath = UIBezierPath(ovalInRect: CGRectMake(x, y, colWidth, rowWidth))
                 getCellStateColor(grid[i,j]).setFill()
-                print(grid[i,j])
+                //print(grid[i,j])
                 ovalPath.fill()
             }//for j
         }//for i
     }
 //
-//    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        if let touch = touches.first {
-//            let position :CGPoint = touch.locationInView(self)
-//            let xreal = position.x - xst
-//            let yreal = position.y - yst
-//            let rown =  Int (xreal / colWidth)
-//            let coln =  Int(yreal / rowWidth)
-//            if (rown >= 0 && rown < rows && coln >= 0 && coln < cols ) {
-//                grid[coln,rown] = (CellState.Empty).toggle(grid[coln][rown])
-//                setNeedsDisplay()
-//            }
-//        }
-//    }
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let touch = touches.first {
+            let position :CGPoint = touch.locationInView(self)
+            let xreal = position.x - xst
+            let yreal = position.y - yst
+            let rown =  Int (xreal / colWidth)
+            let coln =  Int(yreal / rowWidth)
+            if (rown >= 0 && rown < rows && coln >= 0 && coln < cols ) {
+                grid[coln,rown] = (CellState.Alive)
+                setNeedsDisplay()
+            }
+        }
+    }
 }

@@ -188,14 +188,6 @@ class StandardEngine: EngineProtocol {
         } else {
             timeCount = 0.0
         }
-        
-        
-        let center = NSNotificationCenter.defaultCenter()
-        let n = NSNotification(name: "ExampleNotification",
-                               object: nil,
-                               userInfo: nil)
-        center.postNotification(n)
-        print ("\(timer.userInfo?["name"] ?? "not fred")")
     }
 
 }

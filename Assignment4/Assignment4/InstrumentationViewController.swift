@@ -43,7 +43,7 @@ class InstrumentationViewController : UIViewController, EngineDelegate {
             }
     }
     @IBAction func refreshRateSlider(sender: UISlider) {
-        let interval = Double(sender.value)
+        let interval = String(format:"%.2f", sender.value)
         sliderValue.text = String(stringInterpolationSegment: interval)
     }
 
