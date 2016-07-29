@@ -9,7 +9,7 @@
         <!--Instrumentation-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="SimulationViewController" customModule="Assignment4" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="InstrumentationViewController" customModule="Assignment4" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -20,12 +20,18 @@
                         <subviews>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p3I-pW-PuA">
                                 <rect key="frame" x="136" y="317" width="51" height="31"/>
+                                <connections>
+                                    <action selector="timedRefreshToggle:" destination="BYZ-38-t0r" eventType="valueChanged" id="Fgn-JG-kRZ"/>
+                                </connections>
                             </switch>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.10000000000000001" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="pkb-8M-8yc">
                                 <rect key="frame" x="97" y="251" width="126" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="122" id="fmX-Vc-hh8"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="refreshRateSlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="SmH-RV-VXU"/>
+                                </connections>
                             </slider>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nlV-Lv-HVQ">
                                 <rect key="frame" x="36" y="184" width="140" height="30"/>
@@ -83,6 +89,12 @@
                                     <action selector="incrementRows:" destination="BYZ-38-t0r" eventType="valueChanged" id="tfi-sk-wwY"/>
                                 </connections>
                             </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jH-bI-XXu">
+                                <rect key="frame" x="49" y="255" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -210,11 +222,14 @@
                     <connections>
                         <outlet property="cols" destination="nlV-Lv-HVQ" id="hLd-7S-oPM"/>
                         <outlet property="rows" destination="rbz-WK-dqG" id="8bG-aw-CaY"/>
+                        <outlet property="slider" destination="pkb-8M-8yc" id="5ya-JT-6BZ"/>
+                        <outlet property="sliderValue" destination="2jH-bI-XXu" id="Xpz-lQ-7wZ"/>
+                        <outlet property="toggleSwitch" destination="p3I-pW-PuA" id="aCN-XJ-hAB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="719" y="320"/>
+            <point key="canvasLocation" x="719" y="319"/>
         </scene>
         <!--Statistics-->
         <scene sceneID="w9B-N8-uM5">
@@ -256,28 +271,67 @@
                         <viewControllerLayoutGuide type="top" id="QLL-w9-6Qf"/>
                         <viewControllerLayoutGuide type="bottom" id="W5R-KL-lfo"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="yvd-QE-enG">
+                    <view key="view" contentMode="scaleToFill" id="yvd-QE-enG" customClass="GridView" customModule="Assignment4" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.10000000149011612" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iRW-9c-G5a">
-                                <rect key="frame" x="-8" y="20" width="336" height="411"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1vg-Re-q7N" customClass="GridView" customModule="Assignment4" customModuleProvider="target">
+                                <rect key="frame" x="8" y="28" width="304" height="346"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="livingColor">
+                                        <color key="value" red="0.25098040700000002" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="emptyColor">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="bornColor">
+                                        <color key="value" red="0.70902665499999995" green="1" blue="0.57431814140000004" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="diedColor">
+                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
+                                        <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="output" destination="yvd-QE-enG" id="SXQ-uU-L6L"/>
+                                </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNz-2e-Mue">
+                                <rect key="frame" x="16" y="388" width="288" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="buttonPushed:" destination="yvd-QE-enG" eventType="touchUpInside" id="usH-2y-LV1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="iRW-9c-G5a" firstAttribute="leading" secondItem="yvd-QE-enG" secondAttribute="leadingMargin" constant="-24" id="CN5-O0-bHg"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="iRW-9c-G5a" secondAttribute="trailing" constant="-24" id="SBi-Dk-gym"/>
-                            <constraint firstItem="iRW-9c-G5a" firstAttribute="top" secondItem="QLL-w9-6Qf" secondAttribute="bottom" id="iTe-LM-jkl"/>
-                            <constraint firstItem="W5R-KL-lfo" firstAttribute="top" secondItem="iRW-9c-G5a" secondAttribute="bottom" id="zuI-9T-bU1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1vg-Re-q7N" secondAttribute="trailing" constant="-8" id="0ST-0I-kfh"/>
+                            <constraint firstItem="W5R-KL-lfo" firstAttribute="top" secondItem="xNz-2e-Mue" secondAttribute="bottom" constant="13" id="1Xz-sb-5hS"/>
+                            <constraint firstItem="xNz-2e-Mue" firstAttribute="leading" secondItem="yvd-QE-enG" secondAttribute="leadingMargin" constant="129" id="9hE-2Q-WAM"/>
+                            <constraint firstItem="xNz-2e-Mue" firstAttribute="top" secondItem="1vg-Re-q7N" secondAttribute="bottom" constant="14" id="VJw-w7-U2i"/>
+                            <constraint firstItem="1vg-Re-q7N" firstAttribute="leading" secondItem="yvd-QE-enG" secondAttribute="leadingMargin" constant="-8" id="cvF-ZJ-xIl"/>
+                            <constraint firstItem="xNz-2e-Mue" firstAttribute="leading" secondItem="yvd-QE-enG" secondAttribute="leadingMargin" id="eUz-4p-QWF"/>
+                            <constraint firstItem="1vg-Re-q7N" firstAttribute="top" secondItem="QLL-w9-6Qf" secondAttribute="bottom" constant="8" id="g2I-CD-2qE"/>
+                            <constraint firstItem="xNz-2e-Mue" firstAttribute="trailing" secondItem="yvd-QE-enG" secondAttribute="trailingMargin" id="ioa-lR-Hb2"/>
+                            <constraint firstAttribute="bottom" secondItem="1vg-Re-q7N" secondAttribute="bottom" constant="106" id="vYq-8G-WAy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xNz-2e-Mue" secondAttribute="trailing" constant="129" id="zw8-3M-mW2"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="9hE-2Q-WAM"/>
+                                <exclude reference="zw8-3M-mW2"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Simulation " image="magnifying glass" selectedImage="magnifying glass" id="nJD-Pm-ARy"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
-                    <connections>
-                        <outlet property="viewForLayer" destination="iRW-9c-G5a" id="aC5-5t-leo"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Nc-TO-j37" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

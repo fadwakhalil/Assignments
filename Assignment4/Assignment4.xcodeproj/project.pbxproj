@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A720D341D469595001CF4F0 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A720D331D469595001CF4F0 /* GridView.swift */; };
+		3A720D361D46C88F001CF4F0 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A720D351D46C88F001CF4F0 /* Engine.swift */; };
 		3A7382821D39A6D700BA1D67 /* InstrumentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7382811D39A6D700BA1D67 /* InstrumentationViewController.swift */; };
 		3A7382841D39A75500BA1D67 /* SimulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7382831D39A75500BA1D67 /* SimulationViewController.swift */; };
 		3A7382861D39A7A500BA1D67 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7382851D39A7A500BA1D67 /* StatisticsViewController.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A720D331D469595001CF4F0 /* GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		3A720D351D46C88F001CF4F0 /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
 		3A7382811D39A6D700BA1D67 /* InstrumentationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentationViewController.swift; sourceTree = "<group>"; };
 		3A7382831D39A75500BA1D67 /* SimulationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimulationViewController.swift; sourceTree = "<group>"; };
 		3A7382851D39A7A500BA1D67 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
@@ -65,7 +69,9 @@
 				3AF293421D391C73009AF8B7 /* Main.storyboard */,
 				3A7382851D39A7A500BA1D67 /* StatisticsViewController.swift */,
 				3A7382831D39A75500BA1D67 /* SimulationViewController.swift */,
+				3A720D331D469595001CF4F0 /* GridView.swift */,
 				3A7382811D39A6D700BA1D67 /* InstrumentationViewController.swift */,
+				3A720D351D46C88F001CF4F0 /* Engine.swift */,
 				3AF293451D391C73009AF8B7 /* Assets.xcassets */,
 				3AF293471D391C73009AF8B7 /* LaunchScreen.storyboard */,
 				3AF2934A1D391C73009AF8B7 /* Info.plist */,
@@ -148,7 +154,9 @@
 				3A7382861D39A7A500BA1D67 /* StatisticsViewController.swift in Sources */,
 				3A7382841D39A75500BA1D67 /* SimulationViewController.swift in Sources */,
 				3AF293411D391C73009AF8B7 /* ViewController.swift in Sources */,
+				3A720D341D469595001CF4F0 /* GridView.swift in Sources */,
 				3AF2933F1D391C73009AF8B7 /* AppDelegate.swift in Sources */,
+				3A720D361D46C88F001CF4F0 /* Engine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -96,6 +96,9 @@
                                 <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <outlet property="output" destination="t2o-IR-Gle" id="CEA-fO-q63"/>
+                        </connections>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
