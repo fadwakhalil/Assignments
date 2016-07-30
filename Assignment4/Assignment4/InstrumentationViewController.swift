@@ -67,7 +67,7 @@ class InstrumentationViewController : UIViewController, EngineDelegate {
     }
     
     func engineDidUpdate(withGrid: GridProtocol) {
-        let gridview = GridView()
+        //let gridview = GridView()
         //gridview.refreshtime()
         print("hello")
     }
