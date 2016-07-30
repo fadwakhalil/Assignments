@@ -9,9 +9,10 @@
 import UIKit
 
 class SimulationViewController: UIViewController {
+    
+    var gridview = GridView()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
-        
-        
-        
-        
+    }
 }

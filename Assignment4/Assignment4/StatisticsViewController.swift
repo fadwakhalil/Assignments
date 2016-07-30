@@ -14,20 +14,14 @@ class StatisticsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(addGridInfo), name: "gridUpdated", object: nil)
-
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(addGridInfo), name: "gridUpdated", object: nil)
+    }
     func addGridInfo(notification: NSNotification) {
-        // once the new city has been added, clear textfield and
-        // pop back to the previous view
-        self.countText.text = nil
-        self.navigationController?.popViewControllerAnimated(true)
-//        let myString = "Number of living cells in before: \(bef)\n"
-//                        + "Number of living cells in after: \(aft) "
-//        countText.Text = myString
-        
-        print("Catch notification")
+        //print("Catch notification")
         
         guard let userInfo = notification.userInfo,
             let bef  = userInfo["bef"] as? Int,
@@ -39,11 +33,14 @@ class StatisticsViewController: UIViewController {
         
         countText.text = "Number of living cells in before: \(bef)\n"
             + "Number of living cells in after: \(aft) "
-        let alert = UIAlertController(title: "Notification!",
-                                      message:"Count before is \(bef) and Count After is\(aft)",
-                                      preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)    }
+        
+        
+//        let alert = UIAlertController(title: "Notification!",
+//                                      message:"Count before is \(bef) and Count After is \(aft)",
+//                                      preferredStyle: UIAlertControllerStyle.Alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+//        self.presentViewController(alert, animated: true, completion: nil)
+    }
     
     
 //    let myString = "Number of living cells in before: \(before)\n"

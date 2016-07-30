@@ -135,14 +135,13 @@ class StandardEngine: EngineProtocol {
     var delegate: EngineDelegate?
     
     var refreshTimer: NSTimer?
-    let timerEnd:NSTimeInterval = 10.0 //seconds to end the timer
-    var timeCount:NSTimeInterval = 0.0 // counter for the timer
+    var timeCount:NSTimeInterval = 0.0
     
-    var refreshRate: NSTimeInterval = 0.05 {
+    var refreshRate: NSTimeInterval = 0.0 {
         didSet {
             if refreshRate != 0.0 {
                 if let timer = refreshTimer { timer.invalidate() }
-                let sel = #selector(StandardEngine.timerDidFire(_:))
+                let sel = #selector(timerDidFire(_:))
                 refreshTimer = NSTimer.scheduledTimerWithTimeInterval(refreshRate,
                                                                target: self,
                                                                selector: sel,
@@ -151,7 +150,7 @@ class StandardEngine: EngineProtocol {
             }
             else if let timer = refreshTimer {
                 timer.invalidate()
-                self.refreshTimer = nil
+                //self.refreshTimer = nil
             }
         }
     }
@@ -165,7 +164,8 @@ class StandardEngine: EngineProtocol {
     }
     
     func step() -> GridProtocol {
-        Grid(self.rows, self.cols).cells = Grid(self.rows, self.cols).cells.map {
+        var newGrid = Grid(self.rows, self.cols)
+        newGrid.cells = grid.cells.map {
             switch grid.livingNeighbors($0.position) {
             case 2 where $0.state.isLiving(),
             3 where $0.state.isLiving():  return Cell($0.position, .Alive)
@@ -174,20 +174,18 @@ class StandardEngine: EngineProtocol {
             default:                           return Cell($0.position, .Empty)
             }
         }
-        grid = Grid(self.rows, self.cols)
+        grid = newGrid
         if let delegate = delegate { delegate.engineDidUpdate(grid) }
         return grid
     }
     
     @objc func timerDidFire(timer:NSTimer) {
         self.refreshTimer = timer
-        if timeCount <= 0 {  //test for target time reached.
+        if timeCount <= 0 {
             timer.invalidate()
-        } else if timeCount > 0 { //update the time on the clock if not reached
-            timeCount = timeCount + refreshRate
         } else {
-            timeCount = 0.0
-        }
+            timeCount = timeCount + refreshRate
+        } 
     }
 
 }

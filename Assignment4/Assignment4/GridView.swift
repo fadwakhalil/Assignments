@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 @IBDesignable class GridView: UIView  {
 
     
@@ -17,109 +18,11 @@ import UIKit
     @IBInspectable var diedColor: UIColor = UIColor.clearColor().colorWithAlphaComponent(0.6)
     @IBInspectable var gridColor: UIColor = UIColor.clearColor()
     @IBInspectable var gridWidth: CGFloat = 2.0
-//
-//    
-//    enum CellState: String {
-//        
-//        case Living = "Living"
-//        case Empty = "Empty"
-//        case Born = "Born"
-//        case Died = "Died"
-//        
-//        func description() -> String {
-//            switch self {
-//                
-//            default:
-//                return String(self.rawValue)
-//            }
-//        }
-//        
-//        static func allValues() -> [CellState] {
-//            return [.Living, .Empty, .Born, .Died]
-//        }
-//        
-//        func toggle(value:CellState)-> CellState {
-//            switch(value) {
-//            case .Empty, .Died: return .Living
-//            case .Living, .Born: return .Empty
-//            }
-//        }
-//    }
-//    
-//    func getCellStateColor(value:CellState) -> UIColor {
-//        switch value {
-//        case .Empty: return emptyColor
-//        case .Died: return diedColor
-//        case .Born: return bornColor
-//        default: return livingColor
-//        }
-//    }
-//    
-//    var grid:[[CellState]] = [[CellState.Empty]]
-//    
-//    @IBInspectable var rows: Int = 20 {
-//        didSet {
-//            var ncol = 0
-//            if grid.count > 0 {
-//                ncol = grid[0].count
-//                setNeedsDisplay()
-//            }
-//            
-//            grid = Array(count: rows, repeatedValue: Array<CellState>(count: ncol, repeatedValue: CellState.Empty))
-//        }
-//    }
-//    
-//    @IBInspectable var cols: Int = 20 {
-//        didSet {
-//            let nrow = grid.count
-//            grid = Array(count: nrow, repeatedValue: Array<CellState>(count: cols, repeatedValue: CellState.Empty))
-//            setNeedsDisplay()
-//        }
-//    }
-//    
-//    @IBOutlet weak var view: GridView!
-//        var arr = Array(count: rows, repeatedValue: Array<Bool>(count: cols, repeatedValue: false))
-//        var bef = 0
-//        var aft = 0
-//        
-//        for i in 0...rows-1 {
-//            for j in 0...cols-1 {
-//                if grid[i][j].rawValue == "Living"  {
-//                    arr[i][j] = true
-//                    bef = bef + 1
-//                }
-//                else {
-//                    arr[i][j] = false
-//                }
-//            }
-//        }
-//        arr = step.step()
-//        for i in 0...rows-1 {
-//            for j in 0...cols-1 {
-//                if arr [i][j] == true  {
-//                    grid[i][j] = .Living
-//                    aft = aft + 1
-//                }
-//                else {
-//                    grid[i][j] = .Empty
-//                }
-//            }
-//        }
-//        print (bef)
-//        print (aft)
-//        setNeedsDisplay()
-//        
-//    }
-//    
-//    
-    
-    let rows = StandardEngine.sharedInstance.rows
-    let cols = StandardEngine.sharedInstance.cols
-    var grid = StandardEngine.sharedInstance.grid
 
     @IBInspectable var fillColor = UIColor.clearColor()
     @IBInspectable var xProportion = CGFloat(0.8)
     @IBInspectable var widthProportion = CGFloat(0.002)
+    
     var plusHeight: CGFloat = 0.0
     var plusWidth: CGFloat = 0.0
     var xst: CGFloat = 0.0
@@ -130,45 +33,55 @@ import UIKit
     var rowWidth: CGFloat = 0.0
     
     @IBOutlet weak var output: GridView!
-    @IBAction func buttonPushed(sender: AnyObject) {
-        var arr = StandardEngine.sharedInstance.grid
-        //StandardEngine.sharedInstance.grid[1,1] = .Alive
-        print (arr[1,1])
-        var bef = 0
-        var aft = 0
-        
+
+    
+    func cal_live (grid:GridProtocol, rows:Int, cols:Int) -> Int {
+        var count = 0
         for i in 0...rows-1 {
             for j in 0...cols-1 {
                 if grid[i,j] == .Alive  {
-                            arr[i,j] = .Alive
-                            bef = bef + 1
-                        }
-                        else {
-                            arr[i,j] = .Empty
-                        }
-                    }
+                    count = count + 1
                 }
-        
-                for i in 0...rows-1 {
-                    for j in 0...cols-1 {
-                        if arr [i,j] == .Alive  {
-                            grid[i,j] = .Alive
-                            aft = aft + 1
-                        }
-                        else {
-                            grid[i,j] = .Empty
-                        }
-                    }
-                }
+            }
+        }
+        return count
+    }
+    
+    @IBAction func buttonPushed(sender: AnyObject) {
+        let rows = StandardEngine.sharedInstance.rows
+        let cols = StandardEngine.sharedInstance.cols
+        var grid = StandardEngine.sharedInstance.grid
 
+        let bef = cal_live (grid, rows:rows, cols:cols)
+        grid = StandardEngine.sharedInstance.step()
+        let aft = cal_live (grid, rows:rows, cols:cols)
+        self.setNeedsDisplay()
         
-        //let myValues: [String:AnyObject] = ["bef" : bef, "aft" : aft]
         NSNotificationCenter.defaultCenter().postNotificationName("gridUpdated",
                                                                   object: nil,
                                                                   userInfo: ["bef" : bef, "aft" : aft])
-        
+        print (bef)
+        print (aft)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshtime), name: "timerToggled", object: nil)
 
     }
+    
+    
+    func refreshtime() {
+        let rows = StandardEngine.sharedInstance.rows
+        let cols = StandardEngine.sharedInstance.cols
+        var grid = StandardEngine.sharedInstance.grid
+        
+        let bef = cal_live (grid, rows:rows, cols:cols)
+        grid = StandardEngine.sharedInstance.step()
+        let aft = cal_live (grid, rows:rows, cols:cols)
+        self.setNeedsDisplay()
+        
+        print (bef)
+        print (aft)
+    }
+
+    
     
     func getCellStateColor(value:CellState) -> UIColor {
             switch value {
@@ -181,12 +94,15 @@ import UIKit
         
 
     override func drawRect(rect: CGRect) {
+        let rows = StandardEngine.sharedInstance.rows
+        let cols = StandardEngine.sharedInstance.cols
+        var grid = StandardEngine.sharedInstance.grid
         let path = UIBezierPath(rect: rect)
         fillColor.setFill()
         path.fill()
         
         let lineWidth: CGFloat = sqrt(bounds.width*bounds.height) * widthProportion
-        plusHeight = bounds.height * xProportion
+        plusHeight = bounds.height * xProportion*0.8
         plusWidth = bounds.width * xProportion
         let plusPath = UIBezierPath()
         
@@ -244,7 +160,6 @@ import UIKit
         gridColor.setStroke()
         
         plusPath.stroke()
-        //print(rowWidth)
         
         var x: CGFloat  = 0
         var y: CGFloat  = 0
@@ -254,13 +169,16 @@ import UIKit
                 x = (CGFloat(j) * colWidth) + xst
                 let ovalPath = UIBezierPath(ovalInRect: CGRectMake(x, y, colWidth, rowWidth))
                 getCellStateColor(grid[i,j]).setFill()
-                //print(grid[i,j])
                 ovalPath.fill()
             }//for j
         }//for i
     }
 //
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let rows = StandardEngine.sharedInstance.rows
+        let cols = StandardEngine.sharedInstance.cols
+        var grid = StandardEngine.sharedInstance.grid
+
         if let touch = touches.first {
             let position :CGPoint = touch.locationInView(self)
             let xreal = position.x - xst
@@ -268,9 +186,111 @@ import UIKit
             let rown =  Int (xreal / colWidth)
             let coln =  Int(yreal / rowWidth)
             if (rown >= 0 && rown < rows && coln >= 0 && coln < cols ) {
-                grid[coln,rown] = (CellState.Alive)
+                grid[coln,rown] = .Alive //(CellState.Empty).isLiving()
                 setNeedsDisplay()
             }
         }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshtime), name: "timerToggled", object: nil)
+
     }
 }
+
+
+
+//
+//
+//    enum CellState: String {
+//
+//        case Living = "Living"
+//        case Empty = "Empty"
+//        case Born = "Born"
+//        case Died = "Died"
+//
+//        func description() -> String {
+//            switch self {
+//
+//            default:
+//                return String(self.rawValue)
+//            }
+//        }
+//
+//        static func allValues() -> [CellState] {
+//            return [.Living, .Empty, .Born, .Died]
+//        }
+//
+//        func toggle(value:CellState)-> CellState {
+//            switch(value) {
+//            case .Empty, .Died: return .Living
+//            case .Living, .Born: return .Empty
+//            }
+//        }
+//    }
+//
+//    func getCellStateColor(value:CellState) -> UIColor {
+//        switch value {
+//        case .Empty: return emptyColor
+//        case .Died: return diedColor
+//        case .Born: return bornColor
+//        default: return livingColor
+//        }
+//    }
+//
+//    var grid:[[CellState]] = [[CellState.Empty]]
+//
+//    @IBInspectable var rows: Int = 20 {
+//        didSet {
+//            var ncol = 0
+//            if grid.count > 0 {
+//                ncol = grid[0].count
+//                setNeedsDisplay()
+//            }
+//
+//            grid = Array(count: rows, repeatedValue: Array<CellState>(count: ncol, repeatedValue: CellState.Empty))
+//        }
+//    }
+//
+//    @IBInspectable var cols: Int = 20 {
+//        didSet {
+//            let nrow = grid.count
+//            grid = Array(count: nrow, repeatedValue: Array<CellState>(count: cols, repeatedValue: CellState.Empty))
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    @IBOutlet weak var view: GridView!
+//        var arr = Array(count: rows, repeatedValue: Array<Bool>(count: cols, repeatedValue: false))
+//        var bef = 0
+//        var aft = 0
+//
+//        for i in 0...rows-1 {
+//            for j in 0...cols-1 {
+//                if grid[i][j].rawValue == "Living"  {
+//                    arr[i][j] = true
+//                    bef = bef + 1
+//                }
+//                else {
+//                    arr[i][j] = false
+//                }
+//            }
+//        }
+//        arr = step.step()
+//        for i in 0...rows-1 {
+//            for j in 0...cols-1 {
+//                if arr [i][j] == true  {
+//                    grid[i][j] = .Living
+//                    aft = aft + 1
+//                }
+//                else {
+//                    grid[i][j] = .Empty
+//                }
+//            }
+//        }
+//        print (bef)
+//        print (aft)
+//        setNeedsDisplay()
+//
+//    }
+//
+//
+
+
