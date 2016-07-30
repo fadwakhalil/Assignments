@@ -20,9 +20,9 @@ class InstrumentationViewController : UIViewController, EngineDelegate {
         firsttab = StandardEngine.sharedInstance
         firsttab.delegate = self
 
-        let sel = #selector(timedRefreshToggle)
-        let center  = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: sel, name: "TimerNotification", object: nil)
+//        let sel = #selector(refreshRateSlider)
+//        let center  = NSNotificationCenter.defaultCenter()
+//        center.addObserver(self, selector: sel, name: "TimerNotification", object: nil)
     }
     
     @IBOutlet weak var colStepperOutlet: UIStepper!
@@ -33,7 +33,7 @@ class InstrumentationViewController : UIViewController, EngineDelegate {
     @IBOutlet weak var cols: UITextField!
     @IBOutlet weak var toggleSwitch: UISwitch!
     @IBAction func timedRefreshToggle(sender: AnyObject) {
-        
+            
         if toggleSwitch.on {
             print("ON")
             timer?.refreshTimer
@@ -50,6 +50,10 @@ class InstrumentationViewController : UIViewController, EngineDelegate {
     @IBAction func refreshRateSlider(sender: UISlider) {
         let interval = String(format:"%.2f", sender.value)
         sliderValue.text = String(stringInterpolationSegment: interval)
+//        NSNotificationCenter.defaultCenter().postNotificationName("refreshRateSet",
+//                                                                  object: interval,
+//                                                                  userInfo: nil)
+
     }
     
     @IBAction func incrementRows(sender: AnyObject) {
@@ -63,7 +67,9 @@ class InstrumentationViewController : UIViewController, EngineDelegate {
     }
     
     func engineDidUpdate(withGrid: GridProtocol) {
-        
+        let gridview = GridView()
+        //gridview.refreshtime()
+        print("hello")
     }
 }
 

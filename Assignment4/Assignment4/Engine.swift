@@ -164,7 +164,7 @@ class StandardEngine: EngineProtocol {
     }
     
     func step() -> GridProtocol {
-        var newGrid = Grid(self.rows, self.cols)
+        let newGrid = Grid(self.rows, self.cols)
         newGrid.cells = grid.cells.map {
             switch grid.livingNeighbors($0.position) {
             case 2 where $0.state.isLiving(),
