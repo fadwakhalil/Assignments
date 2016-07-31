@@ -1,11 +1,25 @@
 
 import UIKit
 
-class StatisticsViewController: UIViewController {
+class StatisticsViewController: UIViewController, EngineDelegate {
 
+    @IBOutlet weak var emptyCount: UITextField!
+    @IBOutlet weak var aliveCount: UITextField!
+    @IBOutlet weak var bornCount: UITextField!
+    @IBOutlet weak var deadCount: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(addGridInfo), name: "gridUpdated", object: nil)
+
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -13,4 +27,31 @@ class StatisticsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-}
+    func engineDidUpdate(withGrid: GridProtocol) {
+    }
+    
+    func addGridInfo(notification: NSNotification) {
+        //print("Catch notification")
+        
+        guard let userInfo = notification.userInfo,
+            let alivecount = userInfo["alivecount"] as? Int,
+            let emptycount = userInfo["emptycount"] as? Int,
+            let borncount = userInfo["borncount"] as? Int,
+            let deadcount = userInfo["deadcount"] as? Int
+
+        else {
+                print("No Update found")
+            
+                return
+        }
+        //aliveCount.text = "\(bef)"
+        aliveCount.text = "\(alivecount)"
+        emptyCount.text = "\(emptycount)"
+        bornCount.text = "\(borncount)"
+        deadCount.text = "\(deadcount)"
+        
+    }
+
+    func engineDidUpdate(withConfigurations: Array<GridData>) {
+        }
+    }

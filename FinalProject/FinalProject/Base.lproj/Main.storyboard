@@ -88,6 +88,9 @@
                                             <constraint firstAttribute="width" constant="46" id="WmV-d7-hbc"/>
                                         </constraints>
                                         <state key="normal" title="Reset"/>
+                                        <connections>
+                                            <action selector="refreshGrid:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="5M6-LA-uS2"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -323,6 +326,12 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Statistics" image="Statistics" id="KBB-GK-HgT"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="aliveCount" destination="M6G-Ot-CFw" id="osT-yn-05U"/>
+                        <outlet property="bornCount" destination="bqF-63-9LB" id="A17-3W-qVM"/>
+                        <outlet property="deadCount" destination="1vc-pU-vdQ" id="fqg-xy-J82"/>
+                        <outlet property="emptyCount" destination="oF5-Mm-hvb" id="ADS-oz-IZ2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dvv-hQ-DqS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -500,6 +509,10 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dku-F5-UjX">
+                                        <rect key="frame" x="101" y="177" width="46" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

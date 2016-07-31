@@ -32,5 +32,20 @@ class SimulationViewController: UIViewController, EngineDelegate {
         
     }
 
+    @IBAction func refreshGrid(sender: AnyObject) {
+        engine.configuration = nil
+        engine.configurations = []
+        gridView.engine.grid = Grid(engine.rows, engine.cols) { _,_ in .Empty }
+        gridView.setNeedsDisplay()
+        
+    }
+
+    func refreshView() ->() {
+        
+        // Calling the viewDidLoad and viewWillAppear methods to "refresh" the VC and run through the code within the methods themselves
+        engine.configuration = nil
+        engine.configurations = []
+        gridView.setNeedsDisplay()
+    }
 }
 

@@ -18,8 +18,7 @@ class StatisticsViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(addGridInfo), name: "gridUpdated", object: nil)
-    }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(addGridInfo), name: "gridUpdated", object: nil)    }
     func addGridInfo(notification: NSNotification) {
         //print("Catch notification")
         
@@ -30,10 +29,10 @@ class StatisticsViewController: UIViewController {
                 
                 return
         }
+
         
         countText.text = "Number of living cells in before: \(bef)\n"
-            + "Number of living cells in after: \(aft) "
-        
+            + "Number of living cells in after: \(aft) "        
         
 //        let alert = UIAlertController(title: "Notification!",
 //                                      message:"Count before is \(bef) and Count After is \(aft)",

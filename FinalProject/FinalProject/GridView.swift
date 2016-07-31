@@ -93,34 +93,52 @@ class GridView: UIView {
     var colWidth: CGFloat = 0.0
     var rowWidth: CGFloat = 0.0
     
-    @IBOutlet weak var output: GridView!
-    
-    
-    func cal_live () -> Int {
-        var count = 0
+    func cal_live() -> Array<Int> {
+        var alivecount = 0
+        var emptycount = 0
+        var borncount = 0
+        var deadcount = 0
         for i in 0...rows-1 {
             for j in 0...cols-1 {
+                
                 if grid[i,j] == .Alive  {
-                    count = count + 1
+                    alivecount = alivecount + 1
+                }
+                if grid[i,j] == .Empty  {
+                    emptycount = emptycount + 1
+                }
+                if grid[i,j] == .Born  {
+                    borncount = borncount + 1
+                }
+                if grid[i,j] == .Died  {
+                    deadcount = deadcount + 1
                 }
             }
         }
-        return count
+        return [alivecount,emptycount,borncount,deadcount]
+        
     }
-    
+
     @IBAction func buttonPushed(sender: AnyObject) {
         
-        let bef = cal_live ()
         grid = StandardEngine.sharedInstance.step()
-        let aft = cal_live ()
+        let alivecount = cal_live()[0]
+        let emptycount = cal_live()[1]
+        let borncount = cal_live()[2]
+        let deadcount = cal_live()[3]
+        
         self.setNeedsDisplay()
         
         NSNotificationCenter.defaultCenter().postNotificationName("gridUpdated",
                                                                   object: nil,
-                                                                  userInfo: ["bef" : bef, "aft" : aft])
-        print (bef)
-        print (aft)
-        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshtime), name: "timerToggled", object: nil)
+                                                                  userInfo: ["alivecount" : alivecount,
+                                                                            "emptycount" : emptycount,
+                                                                            "borncount" : borncount,
+                                                                            "deadcount" : deadcount])
+        print (alivecount)
+        print (emptycount)
+        print (borncount)
+        print (deadcount)
         
     }
     
