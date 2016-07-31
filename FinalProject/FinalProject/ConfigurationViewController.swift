@@ -8,20 +8,99 @@
 
 import UIKit
 
-class ConfigurationViewController: UITableViewController {
+struct GridData {
+    let title: String
+    let contents: Array<Position>
+    
+    static func fromJSON(json: AnyObject) -> GridData! {
+        if let dict = json as? Dictionary<String, AnyObject> {
+            
+            let title = dict["title"] as! String
+            
+            let contents = dict["contents"] as! Array<Array<Int>>
+            let positions = contents.map({ (array: Array<Int>) -> Position in
+                return Position(array.first!,array.last!)
+            })
+            
+            return GridData(title: title, contents: positions)
+        } else {
+            return nil
+        }
+    }
+}
 
+class ConfigurationViewController: UITableViewController, EngineDelegate {
+
+    
+    
+    let engine = StandardEngine.sharedInstance
+    
+    var configurations: Array<GridData> {
+        get {
+            return engine.configurations
+        }
+        set {
+            engine.configurations = newValue
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        let url = NSURL(string: "https://dl.dropboxusercontent.com/u/7544475/S65g.json")!
+        
+        let fetcher = Fetcher()
+        
+        fetcher.requestJSON(url) {(json, message) in
+            
+            let op = NSBlockOperation {
+                if let json = json {
+                    
+                self.configurations = (json as! Array<AnyObject>).map({ element in
+                     print("Hello")
+                        return GridData.fromJSON(element)
+                    
+                    })
+                }
+            }
+            NSOperationQueue.mainQueue().addOperation(op)
+        }
+    
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        engine.delegate = self
+        tableView.reloadData()
+        
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return configurations.count
+    }
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print("Hello")
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        cell.textLabel?.text = configurations[indexPath.row].title
+        return cell
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    func engineDidUpdate(withGrid: GridProtocol) {
+        
+    }
+    func engineDidUpdate(withConfigurations: Array<GridData>) {
+        tableView.reloadData()
+    }
 
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        engine.configuration = configurations[indexPath.row]
+    }
     /*
     // MARK: - Navigation
 

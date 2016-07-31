@@ -10,6 +10,69 @@ import UIKit
 
 class GridView: UIView {
 
+    let engine = StandardEngine.sharedInstance
+    var rows: Int {
+        get {
+            if let configuration = engine.configuration {
+                let intarray: Array<Int> = configuration.contents.map({
+                    return $0.row
+                })
+                return intarray.maxElement()! + 1
+            }
+            return engine.rows
+        }
+        set {
+            engine.rows = newValue
+        }
+    }
+    var cols: Int {
+        get {
+            if let configuration = engine.configuration {
+                let intarray: Array<Int> = configuration.contents.map({
+                    return $0.col
+                })
+                return intarray.maxElement()! + 1
+            }
+
+            return engine.cols
+        }
+        set {
+            engine.cols = newValue
+        }
+    }
+
+    var grid: GridProtocol {
+        get {
+            if let configuration = engine.configuration {
+                return Grid(rows,cols) { position in
+                    if configuration.contents.contains({
+                        return $0.row == position.row && $0.col == position.col
+                    }) {
+                        return .Alive
+                    } else {
+                        return .Empty
+                    }
+                }
+               
+            }
+
+            return engine.grid
+        }
+        set {
+            if let _ = engine.configuration {
+                var array: Array<Position> = []
+                for row in 0..<rows {
+                    for col in 0..<cols {
+                        if grid[row,col] == .Alive {
+                            array.append(Position(row,col))
+                        }
+                    }
+                }
+            }
+            engine.grid = newValue
+        }
+    }
+    
     @IBInspectable var livingColor: UIColor = UIColor.clearColor()
     @IBInspectable var emptyColor: UIColor = UIColor.clearColor()
     @IBInspectable var bornColor: UIColor = UIColor.clearColor().colorWithAlphaComponent(0.6)
@@ -33,7 +96,7 @@ class GridView: UIView {
     @IBOutlet weak var output: GridView!
     
     
-    func cal_live (grid:GridProtocol, rows:Int, cols:Int) -> Int {
+    func cal_live () -> Int {
         var count = 0
         for i in 0...rows-1 {
             for j in 0...cols-1 {
@@ -46,13 +109,10 @@ class GridView: UIView {
     }
     
     @IBAction func buttonPushed(sender: AnyObject) {
-        let rows = StandardEngine.sharedInstance.rows
-        let cols = StandardEngine.sharedInstance.cols
-        var grid = StandardEngine.sharedInstance.grid
         
-        let bef = cal_live (grid, rows:rows, cols:cols)
+        let bef = cal_live ()
         grid = StandardEngine.sharedInstance.step()
-        let aft = cal_live (grid, rows:rows, cols:cols)
+        let aft = cal_live ()
         self.setNeedsDisplay()
         
         NSNotificationCenter.defaultCenter().postNotificationName("gridUpdated",
@@ -66,20 +126,15 @@ class GridView: UIView {
     
     
     func refreshtime() {
-        let rows = StandardEngine.sharedInstance.rows
-        let cols = StandardEngine.sharedInstance.cols
-        var grid = StandardEngine.sharedInstance.grid
         
-        let bef = cal_live (grid, rows:rows, cols:cols)
+        let bef = cal_live ()
         grid = StandardEngine.sharedInstance.step()
-        let aft = cal_live (grid, rows:rows, cols:cols)
+        let aft = cal_live ()
         self.setNeedsDisplay()
         
         print (bef)
         print (aft)
     }
-    
-    
     
     func getCellStateColor(value:CellState) -> UIColor {
         switch value {
@@ -90,14 +145,9 @@ class GridView: UIView {
         }
     }
     
-    
-
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
         
-        let rows = StandardEngine.sharedInstance.rows
-        let cols = StandardEngine.sharedInstance.cols
-        var grid = StandardEngine.sharedInstance.grid
         let path = UIBezierPath(rect: rect)
         fillColor.setFill()
         path.fill()
@@ -176,9 +226,6 @@ class GridView: UIView {
 
     }
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let rows = StandardEngine.sharedInstance.rows
-        let cols = StandardEngine.sharedInstance.cols
-        var grid = StandardEngine.sharedInstance.grid
         
         if let touch = touches.first {
             let position :CGPoint = touch.locationInView(self)
