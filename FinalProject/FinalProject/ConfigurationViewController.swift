@@ -57,7 +57,6 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
                 if let json = json {
                     
                 self.configurations = (json as! Array<AnyObject>).map({ element in
-                     print("Hello")
                         return GridData.fromJSON(element)
                     
                     })
@@ -80,7 +79,6 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         return configurations.count
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("Hello")
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         cell.textLabel?.text = configurations[indexPath.row].title
         return cell

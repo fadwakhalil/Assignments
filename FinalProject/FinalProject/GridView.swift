@@ -153,7 +153,7 @@ class GridView: UIView {
         path.fill()
         
         let lineWidth: CGFloat = sqrt(bounds.width*bounds.height) * widthProportion
-        plusHeight = bounds.height * xProportion*0.8
+        plusHeight = bounds.height * xProportion
         plusWidth = bounds.width * xProportion
         let plusPath = UIBezierPath()
         

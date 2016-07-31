@@ -33,7 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3A720D3F1D4D7550001CF4F0 /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fetcher.swift; path = ../Fetcher.swift; sourceTree = "<group>"; };
+		3A720D3F1D4D7550001CF4F0 /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
 		FB97CDD11D441B610022CC4A /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB97CDD41D441B610022CC4A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB97CDD61D441B610022CC4A /* InstrumentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentationViewController.swift; sourceTree = "<group>"; };
