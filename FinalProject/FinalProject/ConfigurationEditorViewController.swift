@@ -9,57 +9,67 @@
 import UIKit
 
 
-class ConfigurationEditorViewController: UIViewController, EngineDelegate, tableDelegate {
+class ConfigurationEditorViewController: UIViewController, EngineDelegate {
     
-    var name:GridData?
-    var commit: (String -> Void)?
-
-    let SharedModel = ConfigurationViewController()
     
-    //@IBOutlet weak var gridView: GridView!
+    @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var gridName: UITextField!
     
     let engine = StandardEngine.sharedInstance
     
+    var viaSegue = ""
+    
+    var gridtitle: GridData?
+    var index:Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let rightBarButton = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(saveButton(_:)))
-        self.navigationItem.rightBarButtonItem = rightBarButton
         
-//        let sel = #selector(gridTitle)
-//        let center  = NSNotificationCenter.defaultCenter()
-//        center.addObserver(self, selector: sel, name: "gridTitle", object: nil)
+        gridName.text = viaSegue
+        
+        if let name = gridtitle?.title {
+            gridName?.text = name
+        }
+        
+        //        let rightBarButton = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(saveButton(_:)))
+        //        self.navigationItem.rightBarButtonItem = rightBarButton
+        
     }
     
-    func saveButton(sender:UIBarButtonItem!)
-    {
-        print("save")
-        SharedModel.addGrid(gridName.text!)
-
-        guard let newText = gridName.text, commit = commit
-            else { return }
-        commit(newText)
-        navigationController!.popViewControllerAnimated(true)
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let name = gridName?.text
+        if gridtitle != nil {
+            self.gridtitle?.title = name!
+        } else {
+            gridtitle = GridData(title:name!,contents:[])
+        }
     }
     
-    func gridTitle () {
-    }
-
+    //    func saveButton(sender:UIBarButtonItem!)
+    //    {
+    //        print("save")
+    //
+    //
+    //    }
+    
+    //    func gridTitle () {
+    //    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        SharedModel.delegate = self
     }
-    func dataChanged(newGrid: String) {
-        self.gridName.text = nil
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-
+    //    func dataChanged(newGrid: String) {
+    //        self.gridName.text = nil
+    //        self.navigationController?.popViewControllerAnimated(true)
+    //    }
+    
     
     func engineDidUpdate(withGrid: GridProtocol) {
         //gridView.setNeedsDisplay()
     }
     func engineDidUpdate(withConfigurations: Array<GridData>) {
+        gridView.setNeedsDisplay()
     }
     
 }

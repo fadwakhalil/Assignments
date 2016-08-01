@@ -129,12 +129,13 @@ class GridView: UIView {
         
         self.setNeedsDisplay()
         
+        let myDict: [String:AnyObject] = [ "alivecount": alivecount, "emptycount": emptycount, "borncount": borncount, "deadcount": deadcount]
+        print(myDict)
         NSNotificationCenter.defaultCenter().postNotificationName("gridUpdated",
                                                                   object: nil,
-                                                                  userInfo: ["alivecount" : alivecount,
-                                                                            "emptycount" : emptycount,
-                                                                            "borncount" : borncount,
-                                                                            "deadcount" : deadcount])
+                                                                  userInfo: myDict)
+        
+
     }
     
     

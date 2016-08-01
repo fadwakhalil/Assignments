@@ -21,15 +21,30 @@ class StatisticsViewController: UIViewController, EngineDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshtime), name: "gridUpdated", object: nil)
     }
     
-    func refreshtime() {
+    func refreshtime(notification: NSNotification) {
+
         
-        let bef = gridView.cal_live()
-        gridView.grid = engine.step()
-        let aft = gridView.cal_live()
-        gridView.setNeedsDisplay()
+            if let myDict = notification.userInfo as? [String:AnyObject] {
+                if let alivecount = myDict["alivecount"] as? Int {
+                    aliveCount.text = "\(alivecount)"
+                }
+                if let emptycount = myDict["emptycount"] as? Int {
+                    emptyCount.text = "\(emptycount)"
+                }
+                if let borncount = myDict["borncount"] as? Int {
+                    bornCount.text = "\(borncount)"
+                }
+                if let deadcount = myDict["deadcount"] as? Int {
+                    deadCount.text = "\(deadcount)"
+                }
+
+            }
         
-        print (bef)
-        print (aft)
+//        let alivecount = gridView.cal_live()
+//        let emptycount = gridView.cal_live()
+//        let borncount = gridView.cal_live()
+//        let deadcount = gridView.cal_live()
+
     }
 
     override func viewDidAppear(animated: Bool) {

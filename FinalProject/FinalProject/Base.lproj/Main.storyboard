@@ -520,7 +520,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="n4S-nb-Bcc" kind="show" identifier="toTable" id="CJg-tU-4cc"/>
+                                    <segue destination="n4S-nb-Bcc" kind="show" identifier="editAction" id="CJg-tU-4cc"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

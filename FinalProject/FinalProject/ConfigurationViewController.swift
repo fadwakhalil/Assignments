@@ -9,8 +9,8 @@
 import UIKit
 
 struct GridData {
-    let title: String
-    let contents: Array<Position>
+    var title: String
+    var contents: Array<Position>
     
     static func fromJSON(json: AnyObject) -> GridData! {
         if let dict = json as? Dictionary<String, AnyObject> {
@@ -29,15 +29,10 @@ struct GridData {
     }
 }
 
-protocol tableDelegate: class {
-    func dataChanged(newGrid: String)
-}
-
-let SharedModel = ConfigurationViewController()
+//let SharedModel = ConfigurationViewController()
 
 class ConfigurationViewController: UITableViewController, EngineDelegate {
-
-    weak var delegate: tableDelegate?
+    
     
     let engine = StandardEngine.sharedInstance
     
@@ -58,7 +53,7 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         fetcher.requestJSON(url) {(json, message) in
             let op = NSBlockOperation {
                 if let json = json {
-                self.configurations = (json as! Array<AnyObject>).map({ element in
+                    self.configurations = (json as! Array<AnyObject>).map({ element in
                         return GridData.fromJSON(element)
                     })
                 }
@@ -73,28 +68,24 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         engine.delegate = self
         tableView.reloadData()
         
-        NSNotificationCenter.defaultCenter().postNotificationName("gridTitle",
-                                                                  object: nil,
-                                                                  userInfo: nil)
     }
     
-    func addGrid(gridtitle: String) {
-        delegate?.dataChanged(gridtitle)
-        tableView.reloadData()
-        
-    }
-    @IBAction func addName(sender: AnyObject) {
-        //configurations.append(sender)
-        let itemRow = configurations.count - 1
-        let itemPath = NSIndexPath(forRow:itemRow, inSection: 0)
-        tableView.insertRowsAtIndexPaths([itemPath], withRowAnimation: .Automatic)
-    }
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if segue.identifier == "toTable" {
-            let vc = segue.destinationViewController as! ConfigurationEditorViewController
-            vc.name = GridData(title: "fadwa", contents: [Position(row: 0, col: 0)])
-            print(vc.name)
+    //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+    //        if segue.identifier == "SendDataSegue" {
+    //            let vc = segue.destinationViewController as! ConfigurationEditorViewController
+    //            vc.name = GridData(title: "fadwa", contents: [Position(row: 0, col: 0)])
+    //            print(vc.name)
+    //        }
+    //    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "editAction" {
+            let cell = sender as! UITableViewCell
+            let selectedRow = tableView.indexPathForCell(cell)?.item
+            let detailViewController:ConfigurationEditorViewController = segue.destinationViewController as! ConfigurationEditorViewController
+            
+            detailViewController.index = selectedRow
+            detailViewController.gridtitle = configurations[selectedRow!]
         }
     }
     
@@ -114,15 +105,24 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         if editingStyle == .Delete {
             configurations.removeAtIndex(indexPath.row)
             tableView.reloadData()
-        } 
+        }
     }
     
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromindexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        
+        let grids = configurations[fromindexPath.row]
+        configurations.removeAtIndex(fromindexPath.row)
+        configurations.insert(grids, atIndex: toIndexPath.row)
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        engine.configuration = configurations[indexPath.row]
+    }
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 50.0
     }
     
     func engineDidUpdate(withGrid: GridProtocol) {
@@ -131,8 +131,34 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
     func engineDidUpdate(withConfigurations: Array<GridData>) {
         tableView.reloadData()
     }
-
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        engine.configuration = configurations[indexPath.row]
+    
+    @IBAction func cancel(segue:UIStoryboardSegue) {
+        // do nothing
     }
+    
+    @IBAction func done(segue:UIStoryboardSegue) {
+        
+        let detailViewController = segue.sourceViewController as! ConfigurationEditorViewController
+        let gridDetail = detailViewController.gridtitle
+        
+        if let selectedIndex = detailViewController.index {
+            configurations[selectedIndex] = gridDetail!
+        } else {
+            configurations.append(gridDetail!)
+        }
+        tableView.reloadData()
+    }
+    
+    //MARK:- Editing toggle
+    
+    @IBAction func startEditing(sender: UIBarButtonItem) {
+        tableView.editing = !tableView.editing
+    }
+    
+    override func setEditing(editing: Bool, animated: Bool) {
+        tableView.editing = editing
+        super.setEditing(editing, animated: true)
+    }
+    
+    
 }
