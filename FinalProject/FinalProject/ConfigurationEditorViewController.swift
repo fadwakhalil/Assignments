@@ -8,46 +8,58 @@
 
 import UIKit
 
-class ConfigurationEditorViewController: UIViewController, EngineDelegate {
+
+class ConfigurationEditorViewController: UIViewController, EngineDelegate, tableDelegate {
     
-    @IBOutlet weak var gridView: GridView!
+    var name:GridData?
+    var commit: (String -> Void)?
+
+    let SharedModel = ConfigurationViewController()
+    
+    //@IBOutlet weak var gridView: GridView!
+    @IBOutlet weak var gridName: UITextField!
     
     let engine = StandardEngine.sharedInstance
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let rightBarButton = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(saveButton(_:)))
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        
+//        let sel = #selector(gridTitle)
+//        let center  = NSNotificationCenter.defaultCenter()
+//        center.addObserver(self, selector: sel, name: "gridTitle", object: nil)
+    }
+    
+    func saveButton(sender:UIBarButtonItem!)
+    {
+        print("save")
+        SharedModel.addGrid(gridName.text!)
+
+        guard let newText = gridName.text, commit = commit
+            else { return }
+        commit(newText)
+        navigationController!.popViewControllerAnimated(true)
+    }
+    
+    func gridTitle () {
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        engine.configuration = nil
-        engine.delegate = self
-        gridView.setNeedsDisplay()
-        
+        SharedModel.delegate = self
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func dataChanged(newGrid: String) {
+        self.gridName.text = nil
+        self.navigationController?.popViewControllerAnimated(true)
     }
+
     
     func engineDidUpdate(withGrid: GridProtocol) {
-        gridView.setNeedsDisplay()
+        //gridView.setNeedsDisplay()
     }
     func engineDidUpdate(withConfigurations: Array<GridData>) {
-        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

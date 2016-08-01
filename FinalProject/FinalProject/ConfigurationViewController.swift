@@ -29,9 +29,15 @@ struct GridData {
     }
 }
 
+protocol tableDelegate: class {
+    func dataChanged(newGrid: String)
+}
+
+let SharedModel = ConfigurationViewController()
+
 class ConfigurationViewController: UITableViewController, EngineDelegate {
 
-    
+    weak var delegate: tableDelegate?
     
     let engine = StandardEngine.sharedInstance
     
@@ -46,25 +52,19 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         let url = NSURL(string: "https://dl.dropboxusercontent.com/u/7544475/S65g.json")!
-        
         let fetcher = Fetcher()
         
         fetcher.requestJSON(url) {(json, message) in
-            
             let op = NSBlockOperation {
                 if let json = json {
-                    
                 self.configurations = (json as! Array<AnyObject>).map({ element in
                         return GridData.fromJSON(element)
-                    
                     })
                 }
             }
             NSOperationQueue.mainQueue().addOperation(op)
         }
-    
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -73,6 +73,29 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         engine.delegate = self
         tableView.reloadData()
         
+        NSNotificationCenter.defaultCenter().postNotificationName("gridTitle",
+                                                                  object: nil,
+                                                                  userInfo: nil)
+    }
+    
+    func addGrid(gridtitle: String) {
+        delegate?.dataChanged(gridtitle)
+        tableView.reloadData()
+        
+    }
+    @IBAction func addName(sender: AnyObject) {
+        //configurations.append(sender)
+        let itemRow = configurations.count - 1
+        let itemPath = NSIndexPath(forRow:itemRow, inSection: 0)
+        tableView.insertRowsAtIndexPaths([itemPath], withRowAnimation: .Automatic)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if segue.identifier == "toTable" {
+            let vc = segue.destinationViewController as! ConfigurationEditorViewController
+            vc.name = GridData(title: "fadwa", contents: [Position(row: 0, col: 0)])
+            print(vc.name)
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,14 +107,19 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         return cell
     }
     
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             configurations.removeAtIndex(indexPath.row)
-            //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             tableView.reloadData()
         } 
     }
     
+    override func tableView(tableView: UITableView, moveRowAtIndexPath fromindexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -107,16 +135,4 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         engine.configuration = configurations[indexPath.row]
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

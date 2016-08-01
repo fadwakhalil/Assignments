@@ -3,6 +3,10 @@ import UIKit
 
 class StatisticsViewController: UIViewController, EngineDelegate {
 
+    @IBOutlet weak var gridView: GridView!
+    
+    let engine = StandardEngine.sharedInstance
+
     @IBOutlet weak var emptyCount: UITextField!
     @IBOutlet weak var aliveCount: UITextField!
     @IBOutlet weak var bornCount: UITextField!
@@ -14,11 +18,23 @@ class StatisticsViewController: UIViewController, EngineDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(addGridInfo), name: "gridUpdated", object: nil)
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshtime), name: "gridUpdated", object: nil)
     }
+    
+    func refreshtime() {
+        
+        let bef = gridView.cal_live()
+        gridView.grid = engine.step()
+        let aft = gridView.cal_live()
+        gridView.setNeedsDisplay()
+        
+        print (bef)
+        print (aft)
+    }
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshtime), name: "timerToggled", object: nil)
 
     }
     
@@ -53,5 +69,6 @@ class StatisticsViewController: UIViewController, EngineDelegate {
     }
 
     func engineDidUpdate(withConfigurations: Array<GridData>) {
+        
         }
     }

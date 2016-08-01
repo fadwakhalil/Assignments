@@ -86,8 +86,27 @@ class StandardEngine: EngineProtocol {
     
     weak var delegate: EngineDelegate?
     
-    var refreshRate:  Double = 0.0
+    //var refreshRate:  Double = 0.0
     var refreshTimer: NSTimer?
+    var timeCount:NSTimeInterval = 0.0
+    var refreshRate: NSTimeInterval = 0.0 {
+        didSet {
+            if refreshRate != 0.0 {
+                if let timer = refreshTimer { timer.invalidate() }
+                let sel = #selector(timerDidFire(_:))
+                refreshTimer = NSTimer.scheduledTimerWithTimeInterval(refreshRate,
+                                                                      target: self,
+                                                                      selector: sel,
+                                                                      userInfo: nil,
+                                                                      repeats: true)
+            }
+            else if let timer = refreshTimer {
+                timer.invalidate()
+                //self.refreshTimer = nil
+            }
+        }
+    }
+
     
     subscript (i:Int, j:Int) -> CellState {
         get {
@@ -120,6 +139,15 @@ class StandardEngine: EngineProtocol {
         grid = newGrid
         if let delegate = delegate { delegate.engineDidUpdate(grid) }
         return grid
+    }
+    
+    @objc func timerDidFire(timer:NSTimer) {
+        self.refreshTimer = timer
+        if timeCount <= 0 {
+            timer.invalidate()
+        } else {
+            timeCount = timeCount + refreshRate
+        }
     }
 }
 
@@ -169,6 +197,7 @@ struct Grid: GridProtocol {
                 self[$1.row,$1.col].isLiving() ? $0 + 1 : $0
         }
     }
+    
 }
 
 

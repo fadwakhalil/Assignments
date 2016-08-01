@@ -135,24 +135,8 @@ class GridView: UIView {
                                                                             "emptycount" : emptycount,
                                                                             "borncount" : borncount,
                                                                             "deadcount" : deadcount])
-        print (alivecount)
-        print (emptycount)
-        print (borncount)
-        print (deadcount)
-        
     }
     
-    
-    func refreshtime() {
-        
-        let bef = cal_live ()
-        grid = StandardEngine.sharedInstance.step()
-        let aft = cal_live ()
-        self.setNeedsDisplay()
-        
-        print (bef)
-        print (aft)
-    }
     
     func getCellStateColor(value:CellState) -> UIColor {
         switch value {
@@ -255,8 +239,6 @@ class GridView: UIView {
                 grid[coln,rown] = .Alive //(CellState.Empty).isLiving()
                 setNeedsDisplay()
             }
-        }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshtime), name: "timerToggled", object: nil)
-        
+        }        
     }
 }

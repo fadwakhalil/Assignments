@@ -8,10 +8,17 @@ class SimulationViewController: UIViewController, EngineDelegate {
     let engine = StandardEngine.sharedInstance
     
     
+    @IBAction func saveSimulationGrid(sender: AnyObject) {
+        
+        print("save")
+        //navigationController!.popViewControllerAnimated(true)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
     }
+
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -33,19 +40,10 @@ class SimulationViewController: UIViewController, EngineDelegate {
     }
 
     @IBAction func refreshGrid(sender: AnyObject) {
-        engine.configuration = nil
-        engine.configurations = []
         gridView.engine.grid = Grid(engine.rows, engine.cols) { _,_ in .Empty }
         gridView.setNeedsDisplay()
         
     }
 
-    func refreshView() ->() {
-        
-        // Calling the viewDidLoad and viewWillAppear methods to "refresh" the VC and run through the code within the methods themselves
-        engine.configuration = nil
-        engine.configurations = []
-        gridView.setNeedsDisplay()
-    }
 }
 

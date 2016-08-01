@@ -18,6 +18,7 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
         //        center.addObserver(self, selector: sel, name: "TimerNotification", object: nil)
     }
     
+    @IBOutlet weak var toggleStatus: UILabel!
     @IBOutlet weak var colStepperOutlet: UIStepper!
     @IBOutlet weak var rowStepperOutlet: UIStepper!
     @IBOutlet weak var sliderValue: UILabel!
@@ -28,13 +29,13 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
     @IBAction func timedRefreshToggle(sender: AnyObject) {
         
         if toggleSwitch.on {
-            print("ON")
+            toggleStatus.text = "Timer ON"
             timer?.refreshTimer
             NSNotificationCenter.defaultCenter().postNotificationName("timerToggled",
                                                                       object: nil,
                                                                       userInfo: nil)
         } else {
-            print("OFF")
+            toggleStatus.text = "Timer OFF"
             timer?.refreshTimer
         }
         
@@ -42,7 +43,7 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
     }
     @IBAction func refreshRateSlider(sender: UISlider) {
         let interval = String(format:"%.2f", sender.value)
-        sliderValue.text = String(stringInterpolationSegment: interval)
+        sliderValue.text = "Refresh Rate: " + String(stringInterpolationSegment: interval)
         //        NSNotificationCenter.defaultCenter().postNotificationName("refreshRateSet",
         //                                                                  object: interval,
         //                                                                  userInfo: nil)
