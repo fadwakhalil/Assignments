@@ -29,7 +29,7 @@ class StatisticsViewController: UIViewController, EngineDelegate {
         let alivecount = engine.grid.alive
         let emptycount = engine.grid.empty
         let borncount = engine.grid.born
-        let deadcount = engine.grid.dead
+        let deadcount = engine.grid.died
         
             aliveCount.text = "\(alivecount)"
             emptyCount.text = "\(emptycount)"
