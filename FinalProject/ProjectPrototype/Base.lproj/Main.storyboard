@@ -80,6 +80,7 @@
                                         <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="15"/>
                                         <state key="normal" title="Save"/>
                                         <connections>
+                                            <action selector="addName:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Jpv-yE-mmV"/>
                                             <action selector="saveSimulationGrid:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="GcC-jE-IL2"/>
                                         </connections>
                                     </button>

@@ -55,9 +55,7 @@ class GridView: UIView {
                         return .Empty
                     }
                 }
-                
             }
-            
             return engine.grid
         }
         set {
@@ -74,7 +72,6 @@ class GridView: UIView {
             } else {
                 engine.grid = newValue
             }
-            
         }
     }
     
@@ -92,7 +89,6 @@ class GridView: UIView {
                 delegate.engineDidUpdate(grid)
             }
         }
-        
         get {
             // return array of all alive cells (includes born, living, diseased)
             return grid.cells.reduce([]) { (array, cell) -> [Position] in

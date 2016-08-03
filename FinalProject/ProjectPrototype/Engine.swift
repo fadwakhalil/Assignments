@@ -76,11 +76,16 @@ class StandardEngine: EngineProtocol {
         }
         set {
             if delegate is ConfigurationEditorViewController {
-                configurations[configurationIndex!] = newValue!
+                if ((newValue) != nil){
+                    print(configurationIndex)
+                    print(newValue)
+                    configurations[configurationIndex!] = (newValue)!
+                }
+                
             }
         }
     }
-
+    
     var configurations: Array<GridData> = [] {
         didSet {
             if let delegate = delegate { delegate.engineDidUpdate(self.configurations)}
@@ -121,26 +126,26 @@ class StandardEngine: EngineProtocol {
     var timeCount:NSTimeInterval = 10
     var count = 0
     var seconds = 0
-
+    
     var refreshRate: Double = 0.0
     
     func startTimerWithInterval(refreshRate: NSTimeInterval) {
         seconds = 5
         count = 0
-
-                    if refreshRate != 0.0 {
-                        if let timer = refreshTimer { timer.invalidate() }
-                        let sel = #selector(timerDidFire(_:))
-                        refreshTimer = NSTimer.scheduledTimerWithTimeInterval(1/refreshRate,
-                                                                              target: self,
-                                                                              selector: sel,
-                                                                              userInfo: nil,
-                                                                              repeats: true)
-                    }
-                    else if let timer = refreshTimer {
-                        timer.invalidate()
-                        //self.refreshTimer = nil
-                    }
+        
+        if refreshRate != 0.0 {
+            if let timer = refreshTimer { timer.invalidate() }
+            let sel = #selector(timerDidFire(_:))
+            refreshTimer = NSTimer.scheduledTimerWithTimeInterval(1/refreshRate,
+                                                                  target: self,
+                                                                  selector: sel,
+                                                                  userInfo: nil,
+                                                                  repeats: true)
+        }
+        else if let timer = refreshTimer {
+            timer.invalidate()
+            //self.refreshTimer = nil
+        }
     }
     
     subscript (i:Int, j:Int) -> CellState {
@@ -177,7 +182,7 @@ class StandardEngine: EngineProtocol {
     }
     
     @objc func timerDidFire(timer:NSTimer) {
-
+        
         seconds -= 1
         NSNotificationCenter.defaultCenter().postNotificationName("NextTimerNotification", object: nil)
         if (seconds == 0) {

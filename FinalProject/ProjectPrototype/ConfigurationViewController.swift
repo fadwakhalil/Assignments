@@ -21,7 +21,7 @@ struct GridData {
             let positions = contents.map({ (array: Array<Int>) -> Position in
                 return Position(array.first!,array.last!)
             })
-            
+            //print (positions)
             return GridData(title: title, contents: positions)
         } else {
             return nil
@@ -30,7 +30,6 @@ struct GridData {
 }
 
 class ConfigurationViewController: UITableViewController, EngineDelegate {
-    
     
     let engine = StandardEngine.sharedInstance
     var configurations: Array<GridData> {
@@ -53,6 +52,7 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
                     self.configurations = (json as! Array<AnyObject>).map({ element in
                         return GridData.fromJSON(element)
                     })
+                    //print(self.configurations.first)
                 }
             }
             NSOperationQueue.mainQueue().addOperation(op)
@@ -64,19 +64,7 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         tableView.reloadData()
         engine.configurationIndex = nil
         engine.delegate = self
-        
     }
-    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "editAction" {
-//            let cell = sender as! UITableViewCell
-//            let selectedRow = tableView.indexPathForCell(cell)?.item
-//            let detailViewController:ConfigurationEditorViewController = segue.destinationViewController as! ConfigurationEditorViewController
-//            
-//            detailViewController.index = selectedRow
-//            detailViewController.gridtitle = configurations[selectedRow!]
-//        }
-//    }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return configurations.count
@@ -85,7 +73,7 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         guard let cell = tableView.dequeueReusableCellWithIdentifier("cell") else { preconditionFailure("missing Default reuse identifier") }
         let row = indexPath.row
         guard let nameLabel = cell.textLabel else {
-            preconditionFailure("wtf?")
+            preconditionFailure("Error?")
         }
         nameLabel.text = configurations[row].title
         cell.tag = row
@@ -131,7 +119,8 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let editingRow = (sender as! UITableViewCell).tag
-        guard let editingVC = segue.destinationViewController as? ConfigurationEditorViewController else { preconditionFailure("Error?") }
+        guard let editingVC = segue.destinationViewController as? ConfigurationEditorViewController
+            else { preconditionFailure("Error?") }
         
         engine.configurationIndex = editingRow
         editingVC.gridtitle = configurations[editingRow]
@@ -143,25 +132,8 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         }
     }
 
+    
     @IBAction func addConfiguration(sender: AnyObject) {
         configurations.append(GridData(title: "Add new grid...", contents: []))
     }
-    
-//    @IBAction func cancel(segue:UIStoryboardSegue) {
-//        // do nothing
-//    }
-    
-//    @IBAction func done(segue:UIStoryboardSegue) {
-//        
-//        let detailViewController = segue.sourceViewController as! ConfigurationEditorViewController
-//        let gridDetail = detailViewController.gridtitle
-//        
-//        if let selectedIndex = detailViewController.index {
-//            configurations[selectedIndex] = gridDetail!
-//        } else {
-//            configurations.append(gridDetail!)
-//        }
-//        tableView.reloadData()
-//    }
-    
 }

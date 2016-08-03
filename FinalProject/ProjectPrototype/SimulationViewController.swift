@@ -16,7 +16,7 @@ class SimulationViewController: UIViewController, EngineDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshGridWithTimer), name: "timerToggled", object: nil)
-
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -38,7 +38,7 @@ class SimulationViewController: UIViewController, EngineDelegate {
     func engineDidUpdate(withGrid: GridProtocol) {
         gridView.setNeedsDisplay()
         StandardEngine.sharedInstance.startTimerWithInterval(10)
-
+        
     }
     
     func refreshGridWithTimer(notification: NSNotification) {
@@ -50,11 +50,11 @@ class SimulationViewController: UIViewController, EngineDelegate {
             gridView.setNeedsDisplay()
         }
     }
-
+    
     func engineDidUpdate(withConfigurations: Array<GridData>) {
         
     }
-
+    
     @IBAction func buttonPushed(sender: AnyObject) {
         
         engine.grid = StandardEngine.sharedInstance.step()
@@ -63,22 +63,53 @@ class SimulationViewController: UIViewController, EngineDelegate {
         gridView.setNeedsDisplay()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimulationViewController.NextTimerNoticationFunction(_:)), name:"NextTimerNotification", object: nil)
-
+        
     }
-
+    
     
     func NextTimerNoticationFunction(notification: NSNotification){
         engine.grid = StandardEngine.sharedInstance.step()
         gridView.setNeedsDisplay()
         
     }
-
-
+    
+    
     @IBAction func refreshGrid(sender: AnyObject) {
         gridView.engine.grid = Grid(engine.rows, engine.cols) { _,_ in .Empty }
         gridView.setNeedsDisplay()
         
     }
-    
+    @IBAction func addName(sender: AnyObject) {
+        
+        let alert = UIAlertController(title: "New Name",
+                                      message: "Add a new name",
+                                      preferredStyle: .Alert)
+        
+        let saveAction = UIAlertAction(title: "Save",
+                                       style: .Default,
+                                       handler: { (action:UIAlertAction) -> Void in
+                                        
+                                        let textField = alert.textFields!.first
+                                        self.engine.configurations.append(GridData(title: textField!.text!, contents: self.gridView.points ))
+                                        //self.engine.configurations.append(GridData(title: textField!.text!, contents: self.gridView.points))
+
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .Default) { (action: UIAlertAction) -> Void in
+        }
+        
+        alert.addTextFieldWithConfigurationHandler {
+            (textField: UITextField) -> Void in
+        }
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        presentViewController(alert,
+                              animated: true,
+                              completion: nil)
+    }
+
 }
 

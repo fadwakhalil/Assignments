@@ -46,8 +46,6 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
             print(newValue)
             StandardEngine.sharedInstance.startTimerWithInterval(NSTimeInterval(0))
         }
-        
-        
     }
     
     @IBAction func refreshRateSlider(sender: UISlider) {
@@ -71,7 +69,5 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
     func engineDidUpdate(withConfigurations: Array<GridData>) {
         
     }
-    
-    
 }
 

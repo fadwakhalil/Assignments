@@ -8,9 +8,7 @@
 
 import UIKit
 
-
 class ConfigurationEditorViewController: UIViewController, EngineDelegate {
-    
     
     @IBOutlet weak var gridView: GridView!
     @IBOutlet weak var gridName: UITextField!
@@ -21,23 +19,8 @@ class ConfigurationEditorViewController: UIViewController, EngineDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         gridName.text = gridtitle?.title
-        
-        //        let rightBarButton = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(saveButton(_:)))
-        //        self.navigationItem.rightBarButtonItem = rightBarButton
-        
     }
-    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        
-//        let name = gridName?.text
-//        if gridtitle != nil {
-//            self.gridtitle?.title = name!
-//        } else {
-//            gridtitle = GridData(title:name!,contents:[])
-//        }
-//    }
     
     @IBAction func save(sender: AnyObject) {
         guard let newText = gridName.text, commit = commit
@@ -53,11 +36,6 @@ class ConfigurationEditorViewController: UIViewController, EngineDelegate {
         gridView.setNeedsDisplay()
 
     }
-    //    func dataChanged(newGrid: String) {
-    //        self.gridName.text = nil
-    //        self.navigationController?.popViewControllerAnimated(true)
-    //    }
-    
     
     func engineDidUpdate(withGrid: GridProtocol) {
         //gridView.setNeedsDisplay()
