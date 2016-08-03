@@ -35,7 +35,7 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
             let mySwitchBool = toggleSwitch.on
             print(mySwitchBool)
             let switchTrue: [String:AnyObject] = [ "switchTrue": "true"]
-
+            StandardEngine.sharedInstance.startTimerWithInterval(NSTimeInterval(0))
             NSNotificationCenter.defaultCenter().postNotificationName("timerToggled",
                                                                       object: nil,
                                                                       userInfo: switchTrue)

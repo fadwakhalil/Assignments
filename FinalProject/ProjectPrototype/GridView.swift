@@ -17,7 +17,8 @@ class GridView: UIView {
                 let intarray: Array<Int> = configuration.contents.map({
                     return $0.row
                 })
-                return intarray.maxElement()! + 1
+                let value = (intarray.maxElement() ?? 20 ) + 1
+                return value >= 20 ? value : 20
             }
             return engine.rows
         }
@@ -31,7 +32,8 @@ class GridView: UIView {
                 let intarray: Array<Int> = configuration.contents.map({
                     return $0.col
                 })
-                return intarray.maxElement()! + 1
+                let value = (intarray.maxElement() ?? 20 ) + 1
+                return value >= 20 ? value : 20
             }
             
             return engine.cols
@@ -63,13 +65,16 @@ class GridView: UIView {
                 var array: Array<Position> = []
                 for row in 0..<rows {
                     for col in 0..<cols {
-                        if grid[row,col] == .Alive {
+                        if newValue[row,col] == .Alive {
                             array.append(Position(row,col))
                         }
                     }
                 }
+                engine.configurations[engine.configurationIndex!].contents = array
+            } else {
+                engine.grid = newValue
             }
-            engine.grid = newValue
+            
         }
     }
     
@@ -118,31 +123,6 @@ class GridView: UIView {
     var colWidth: CGFloat = 0.0
     var rowWidth: CGFloat = 0.0
     
-    func cal_live() -> Array<Int> {
-        var alivecount = 0
-        var emptycount = 0
-        var borncount = 0
-        var deadcount = 0
-        for i in 0...rows-1 {
-            for j in 0...cols-1 {
-                
-                if grid[i,j] == .Alive  {
-                    alivecount = alivecount + 1
-                }
-                if grid[i,j] == .Empty  {
-                    emptycount = emptycount + 1
-                }
-                if grid[i,j] == .Born  {
-                    borncount = borncount + 1
-                }
-                if grid[i,j] == .Died  {
-                    deadcount = deadcount + 1
-                }
-            }
-        }
-        return [alivecount,emptycount,borncount,deadcount]
-        
-    }
     
 
     func getCellStateColor(value:CellState) -> UIColor {

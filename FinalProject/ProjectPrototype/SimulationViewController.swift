@@ -15,6 +15,8 @@ class SimulationViewController: UIViewController, EngineDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshGridWithTimer), name: "timerToggled", object: nil)
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -22,10 +24,6 @@ class SimulationViewController: UIViewController, EngineDelegate {
         engine.configuration = nil
         engine.delegate = self
         gridView.setNeedsDisplay()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshGridWithTimer), name: "timerToggled", object: nil)
-
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -50,7 +48,6 @@ class SimulationViewController: UIViewController, EngineDelegate {
             
             engine.grid = StandardEngine.sharedInstance.step()
             gridView.setNeedsDisplay()
-            
         }
     }
 
@@ -61,24 +58,11 @@ class SimulationViewController: UIViewController, EngineDelegate {
     @IBAction func buttonPushed(sender: AnyObject) {
         
         engine.grid = StandardEngine.sharedInstance.step()
-        let alivecount = gridView.cal_live()[0]
-        let emptycount = gridView.cal_live()[1]
-        let borncount = gridView.cal_live()[2]
-        let deadcount = gridView.cal_live()[3]
         
         
         gridView.setNeedsDisplay()
         
-        let myDict: [String:AnyObject] = [ "alivecount": alivecount, "emptycount": emptycount, "borncount": borncount, "deadcount": deadcount]
-        
-        NSNotificationCenter.defaultCenter().postNotificationName("gridUpdated",
-                                                                  object: nil,
-                                                                  userInfo: myDict)
-        
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimulationViewController.NextTimerNoticationFunction(_:)), name:"NextTimerNotification", object: nil)
-
-        
 
     }
 

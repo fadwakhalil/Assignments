@@ -61,7 +61,7 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        tableView.reloadData()
         engine.configurationIndex = nil
         engine.delegate = self
         
@@ -145,9 +145,6 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
 
     @IBAction func addConfiguration(sender: AnyObject) {
         configurations.append(GridData(title: "Add new grid...", contents: []))
-        let itemRow = configurations.count - 1
-        let itemPath = NSIndexPath(forRow:itemRow, inSection: 0)
-        tableView.insertRowsAtIndexPaths([itemPath], withRowAnimation: .Automatic)
     }
     
 //    @IBAction func cancel(segue:UIStoryboardSegue) {
