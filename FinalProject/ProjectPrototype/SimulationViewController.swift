@@ -10,7 +10,6 @@ class SimulationViewController: UIViewController, EngineDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(refreshGridWithTimer), name: "timerToggled", object: nil)
         
     }
@@ -28,7 +27,6 @@ class SimulationViewController: UIViewController, EngineDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func engineDidUpdate(withGrid: GridProtocol) {
@@ -87,7 +85,6 @@ class SimulationViewController: UIViewController, EngineDelegate {
                                         
                                         let textField = alert.textFields!.first
                                         self.engine.configurations.append(GridData(title: textField!.text!, contents: self.gridView.points ))
-                                        //self.engine.configurations.append(GridData(title: textField!.text!, contents: self.gridView.points))
 
         })
         

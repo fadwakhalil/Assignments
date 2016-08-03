@@ -14,7 +14,6 @@ class StatisticsViewController: UIViewController, EngineDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -24,8 +23,6 @@ class StatisticsViewController: UIViewController, EngineDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
-        
     }
     
     func engineDidUpdate(withGrid: GridProtocol) {
@@ -38,7 +35,6 @@ class StatisticsViewController: UIViewController, EngineDelegate {
             emptyCount.text = "\(emptycount)"
             bornCount.text = "\(borncount)"
             deadCount.text = "\(deadcount)"
-
     }
     
     func engineDidUpdate(withConfigurations: Array<GridData>) {

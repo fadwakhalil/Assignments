@@ -216,7 +216,7 @@ class GridView: UIView {
             let rown =  Int (xreal / colWidth)
             let coln =  Int(yreal / rowWidth)
             if (rown >= 0 && rown < rows && coln >= 0 && coln < cols ) {
-                grid[coln,rown] = .Alive //(CellState.Empty).isLiving()
+                grid[coln,rown] = .Alive 
                 setNeedsDisplay()
             }
         }        

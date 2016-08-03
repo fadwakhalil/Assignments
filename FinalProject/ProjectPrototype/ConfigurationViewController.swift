@@ -80,9 +80,6 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         return cell
     }
     
-//    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-//        return true
-//    }
     override func tableView(tableView: UITableView,
                             commitEditingStyle editingStyle: UITableViewCellEditingStyle,
                                                forRowAtIndexPath indexPath: NSIndexPath) {
@@ -93,19 +90,6 @@ class ConfigurationViewController: UITableViewController, EngineDelegate {
         }
     }
     
-//    override func tableView(tableView: UITableView, moveRowAtIndexPath fromindexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-//        let grids = configurations[fromindexPath.row]
-//        configurations.removeAtIndex(fromindexPath.row)
-//        configurations.insert(grids, atIndex: toIndexPath.row)
-//    }
-    
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        engine.configuration = configurations[indexPath.row]
-//    }
-//    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-//        return true
-//    }
-//    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 70.0
     }

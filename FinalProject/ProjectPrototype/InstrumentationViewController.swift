@@ -13,10 +13,6 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
         firsttab = StandardEngine.sharedInstance
         firsttab.delegate = self
         StandardEngine.sharedInstance.refreshRate = Double(slider.value)
-        
-        //        let sel = #selector(refreshRateSlider)
-        //        let center  = NSNotificationCenter.defaultCenter()
-        //        center.addObserver(self, selector: sel, name: "TimerNotification", object: nil)
     }
     
     @IBOutlet weak var toggleStatus: UILabel!
@@ -40,9 +36,7 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
             StandardEngine.sharedInstance.refreshRate = 0
         }
 
-        
         rt = StandardEngine.sharedInstance.refreshRate
-        
         
         StandardEngine.sharedInstance.startTimerWithInterval(NSTimeInterval(rt))
         NSNotificationCenter.defaultCenter().postNotificationName("timerToggled",
