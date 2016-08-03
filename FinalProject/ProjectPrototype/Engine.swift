@@ -123,16 +123,10 @@ class StandardEngine: EngineProtocol {
     
     //var refreshRate:  Double = 0.0
     var refreshTimer: NSTimer?
-    var timeCount:NSTimeInterval = 10
-    var count = 0
-    var seconds = 0
     
     var refreshRate: Double = 0.0
     
     func startTimerWithInterval(refreshRate: NSTimeInterval) {
-        seconds = 5
-        count = 0
-        
         if refreshRate != 0.0 {
             if let timer = refreshTimer { timer.invalidate() }
             let sel = #selector(timerDidFire(_:))
@@ -144,9 +138,14 @@ class StandardEngine: EngineProtocol {
         }
         else if let timer = refreshTimer {
             timer.invalidate()
-            //self.refreshTimer = nil
         }
     }
+    
+    @objc func timerDidFire(timer:NSTimer) {
+        NSNotificationCenter.defaultCenter().postNotificationName("NextTimerNotification", object: nil)
+    }
+   
+    
     
     subscript (i:Int, j:Int) -> CellState {
         get {
@@ -156,8 +155,6 @@ class StandardEngine: EngineProtocol {
             grid.cells[i*cols+j].state = newValue
         }
     }
-    
-    
     
     init(_ rows: Int, _ cols: Int, cellInitializer: CellInitializer = {_ in .Empty }) {
         self.rows = rows
@@ -181,15 +178,6 @@ class StandardEngine: EngineProtocol {
         return grid
     }
     
-    @objc func timerDidFire(timer:NSTimer) {
-        
-        seconds -= 1
-        NSNotificationCenter.defaultCenter().postNotificationName("NextTimerNotification", object: nil)
-        if (seconds == 0) {
-            timer.invalidate()
-            
-        }
-    }
 }
 
 struct Grid: GridProtocol {

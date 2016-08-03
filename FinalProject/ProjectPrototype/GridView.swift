@@ -77,20 +77,17 @@ class GridView: UIView {
     
     var points: [Position] {
         set {
-            // set the row and col from that - double the maximum
             let newGrid = Grid(rows, cols) { position in
                 return newValue.contains({ return position.row == $0.row && position.col == $0.col }) ? .Alive : .Empty
             }
             
             grid = newGrid
             
-            // send EngineUpdate notification
             if let delegate = StandardEngine.sharedInstance.delegate {
                 delegate.engineDidUpdate(grid)
             }
         }
         get {
-            // return array of all alive cells (includes born, living, diseased)
             return grid.cells.reduce([]) { (array, cell) -> [Position] in
                 if cell.state == .Alive {
                     return array + [cell.position]

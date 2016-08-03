@@ -81,7 +81,6 @@
                                         <state key="normal" title="Save"/>
                                         <connections>
                                             <action selector="addName:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Jpv-yE-mmV"/>
-                                            <action selector="saveSimulationGrid:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="GcC-jE-IL2"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -286,7 +285,7 @@
                                     <action selector="incrementCols:" destination="xrk-m4-FgQ" eventType="valueChanged" id="Xcs-Vc-5E3"/>
                                 </connections>
                             </stepper>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="h3k-JM-Ngg">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="3" translatesAutoresizingMaskIntoConstraints="NO" id="h3k-JM-Ngg">
                                 <rect key="frame" x="27" y="498" width="403" height="31"/>
                                 <connections>
                                     <action selector="refreshRateSlider:" destination="xrk-m4-FgQ" eventType="valueChanged" id="Io7-nm-cRq"/>
@@ -318,7 +317,7 @@
                                     <action selector="timedRefreshToggle:" destination="xrk-m4-FgQ" eventType="valueChanged" id="3cY-3v-fWg"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refresh Rate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xj7-6R-8wt">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xj7-6R-8wt">
                                 <rect key="frame" x="445" y="502" width="111" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="cqb-2Q-hnI"/>

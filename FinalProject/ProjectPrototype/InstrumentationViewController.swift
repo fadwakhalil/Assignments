@@ -12,6 +12,7 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
         StandardEngine.sharedInstance.cols = 10
         firsttab = StandardEngine.sharedInstance
         firsttab.delegate = self
+        StandardEngine.sharedInstance.refreshRate = Double(slider.value)
         
         //        let sel = #selector(refreshRateSlider)
         //        let center  = NSNotificationCenter.defaultCenter()
@@ -26,31 +27,33 @@ class InstrumentationViewController: UIViewController, EngineDelegate {
     @IBOutlet weak var rows: UITextField!
     @IBOutlet weak var cols: UITextField!
     @IBOutlet weak var toggleSwitch: UISwitch!
+    var rt = StandardEngine.sharedInstance.refreshRate
+    
     @IBAction func timedRefreshToggle(sender: AnyObject) {
-        
+        var switchTrue: [String:AnyObject] = [ "switchTrue": "false"]
         if toggleSwitch.on {
-            StandardEngine.sharedInstance.count += 1
             toggleStatus.text = "Timer ON"
-            let newValue = slider.value
-            let mySwitchBool = toggleSwitch.on
-            print(mySwitchBool)
-            let switchTrue: [String:AnyObject] = [ "switchTrue": "true"]
-            StandardEngine.sharedInstance.startTimerWithInterval(NSTimeInterval(0))
-            NSNotificationCenter.defaultCenter().postNotificationName("timerToggled",
-                                                                      object: nil,
-                                                                      userInfo: switchTrue)
-
+            switchTrue = [ "switchTrue": "true"]
+            StandardEngine.sharedInstance.refreshRate = Double(slider.value)
         } else {
             toggleStatus.text = "Timer OFF"
-            let newValue = 0
-            print(newValue)
-            StandardEngine.sharedInstance.startTimerWithInterval(NSTimeInterval(0))
+            StandardEngine.sharedInstance.refreshRate = 0
         }
+
+        
+        rt = StandardEngine.sharedInstance.refreshRate
+        
+        
+        StandardEngine.sharedInstance.startTimerWithInterval(NSTimeInterval(rt))
+        NSNotificationCenter.defaultCenter().postNotificationName("timerToggled",
+                                                                      object: nil,
+                                                                      userInfo: switchTrue)
     }
     
     @IBAction func refreshRateSlider(sender: UISlider) {
         let interval = String(format:"%.2f", sender.value)
-        sliderValue.text = "Refresh Rate: " + String(stringInterpolationSegment: interval)
+        sliderValue.text = String(stringInterpolationSegment: interval)
+        StandardEngine.sharedInstance.refreshRate = Double(slider.value)
     }
 
     @IBAction func incrementRows(sender: AnyObject) {

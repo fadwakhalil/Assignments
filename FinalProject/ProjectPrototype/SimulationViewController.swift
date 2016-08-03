@@ -4,14 +4,10 @@ import UIKit
 class SimulationViewController: UIViewController, EngineDelegate {
     
     @IBOutlet weak var gridView: GridView!
+    var switchTrue: [String:AnyObject] = [ "switchTrue": "false"]
     
     let engine = StandardEngine.sharedInstance
     
-    @IBAction func saveSimulationGrid(sender: AnyObject) {
-        
-        print("save")
-        //navigationController!.popViewControllerAnimated(true)
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -37,15 +33,12 @@ class SimulationViewController: UIViewController, EngineDelegate {
     
     func engineDidUpdate(withGrid: GridProtocol) {
         gridView.setNeedsDisplay()
-        StandardEngine.sharedInstance.startTimerWithInterval(10)
-        
+        StandardEngine.sharedInstance.startTimerWithInterval(StandardEngine.sharedInstance.refreshRate * 20)
     }
     
     func refreshGridWithTimer(notification: NSNotification) {
-        if let mySwitchBool = notification.userInfo as? [String:AnyObject] {
-            print("hello1")
-            print(mySwitchBool)
-            
+        switchTrue = (notification.userInfo as? [String:AnyObject])!
+        if (switchTrue["switchTrue"]! as! String == "true") {
             engine.grid = StandardEngine.sharedInstance.step()
             gridView.setNeedsDisplay()
         }
@@ -58,16 +51,19 @@ class SimulationViewController: UIViewController, EngineDelegate {
     @IBAction func buttonPushed(sender: AnyObject) {
         
         engine.grid = StandardEngine.sharedInstance.step()
-        
-        
         gridView.setNeedsDisplay()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SimulationViewController.NextTimerNoticationFunction(_:)), name:"NextTimerNotification", object: nil)
-        
+        if (switchTrue["switchTrue"]! as! String == "true") {
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NextTimerNoticationFunction(_:)), name:"NextTimerNotification", object: nil)
+        }
+        else {
+            StandardEngine.sharedInstance.startTimerWithInterval(0)
+            StandardEngine.sharedInstance.refreshRate = 0
+        }
     }
     
-    
     func NextTimerNoticationFunction(notification: NSNotification){
+
         engine.grid = StandardEngine.sharedInstance.step()
         gridView.setNeedsDisplay()
         
